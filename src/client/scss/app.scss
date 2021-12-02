@@ -1,0 +1,246 @@
+// First override some or all individual color variables
+$primary: #25408f;
+$secondary: #8f5325;
+$success: #3e8d63;
+$info: #13101c;
+$warning: #945707;
+$danger: #d62518;
+$light: #f8f9fa;
+$dark: #343a40;
+
+// Then add them to your custom theme-colors map, together with any additional colors you might need
+// $theme-colors: (
+// 	primary: $primary,
+// 	secondary: $secondary,
+// 	success: $success,
+// 	info: $info,
+// 	warning: $warning,
+// 	danger: $danger,
+// 	light: $light,
+// 	dark: $dark,
+// 	// add any additional color below
+// );
+
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Amatic SC', cursive;
+}
+
+.container-fluid{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+#background {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../assets/foyer.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden; 
+    
+
+}
+
+.navigation-button {
+    border: none;
+    background-color: transparent;
+    margin: 50px;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+
+
+button:focus {
+    outline: none;
+}
+
+button:hover i {
+    color: rgb(102, 102, 102);
+}
+
+i {
+    color: gray;
+    font-size: 2em;
+}
+
+/* Book */
+.book {
+    width: 400px;
+    height: 550px;
+    position: relative;
+    transition: transform 0.5s;
+}
+
+.paper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    perspective: 1500px;
+}
+
+.front {
+    backface-visibility: hidden;
+    border-left: 3px antiquewhite;
+    background-image: url("../assets/cover2.png");
+    
+}
+
+.front, 
+.back {
+    border-left: #3d2505a6 6px solid;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: initial !important;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    transform-origin: left;
+    transition: transform 0.5s;
+    background-image: url("../assets/paper.jpg");
+}
+
+.front {
+    z-index: 1;
+}
+
+.back {
+    z-index: 0;
+}
+
+.front-content,
+.back-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-content {
+    transform: rotateY(180deg)
+}
+
+/* Paper Flipped */
+.flipped .front,
+.flipped .back {
+    transform: rotateY(-180deg)
+}
+
+/* Paper Z-index */
+#p1 {
+    z-index: 3;
+}
+
+#p2 {
+    z-index: 2;
+    
+}
+
+#p3 {
+    z-index: 1;
+}
+
+/* Customization */
+
+.book-title {
+    font-size: 3em;
+    margin-bottom: 40px;
+}
+
+.cover-img {
+    border-radius: 30px;;
+    width: 300px;
+    height: 400px;
+    object-fit: fill;
+    border: 3px rgb(133, 127, 127) solid;
+    padding: 10px;
+    margin: 10px;
+}
+
+#b1 {
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    justify-content: space-around;
+}
+
+#b1 h2 {
+    font-size: 2em;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#b1 p {
+    margin-bottom: 20px;
+}
+
+.sidebar {
+    background-color: rgb(255, 255, 255, 0.8);
+    background-image: url("../assets/cover2.png");
+    background-position: center;
+    font-size: xx-large;
+}
+
+#Suspect {
+    top: -103px;
+    height: 510px;
+    position: relative;
+    align-items: center;
+}
+
+.modalstyle{
+    background-color: rgb(255, 255, 255, 0.8);
+    backface-visibility: hidden;
+    border-left: 3px antiquewhite;
+    background-image: url("../assets/paper.jpg");
+    padding: 15px;
+    margin: 20px;
+    bottom: 1px;
+    height: 205px;
+    position: absolute;
+    left: 92px;
+    top: 200px;
+    border-radius: 15px;
+    border: solid 3px grey;
+}    
+
+.formstyle{
+    justify-content: center;
+    align-items: center;
+    display: table-caption;
+}
+
+#btnform{
+    display: flex;
+    position: absolute;
+    left: 26px;
+    margin-top: 7px;
+}
+
+#Cluebanner {
+    height: 380px;
+    width: 280px;
+    margin: 10px;
+    border-radius: 15px;
+    border: solid 3px grey;
+}
+
+#Todo{
+    top: -16px;
+    height: 510px;
+    position: relative;
+}
