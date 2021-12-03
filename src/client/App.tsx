@@ -248,7 +248,7 @@ function App() {
                 <div id="b1" className={"back-content"}>
                   <div id={"Todo"} className="container">
                     <div className={"content"}>
-                      <h2>Create a To-Do List:</h2>
+                      <h2 id={"list"}>Create a To-Do List:</h2>
                       <input
                         type="text"
                         placeholder="enter task"
@@ -261,7 +261,7 @@ function App() {
                         add
                       </button>
 
-                      <h4>Click checkmark to finish a task and get a clue!</h4>
+                      <h4 id={"check"}>Click checkmark to finish a task and get a clue!</h4>
                       <h4>{TaskList}</h4>
                     </div>
                   </div>
