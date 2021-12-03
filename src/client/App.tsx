@@ -11,6 +11,8 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import Clue from "./Components/Clue";
 import Task from "./Components/Task";
 import Services from "../server/Services";
+import LoginModal from "./Components/loginModal";
+import SideInstructions from "./Components/SideInstructions";
 
 function App() {
   const prevBtn = useRef<HTMLButtonElement>(null);
@@ -37,11 +39,13 @@ function App() {
     "_____",
     "_____",
   ]);
+  const handleModalOpen = (val) => setIsOpen(val);
+  const handleLogin = (val) => setIsLoggedIn(val);
 
   let blankArray = blanks.map((val) => {
     return val;
   });
-  let mystery = `Our myster is awesome because ${blankArray[1]}`;
+  let mystery = `Our mystery is awesome because ${blankArray[1]}`;
 
   // Typescript errors on task_content and val.id
   const TaskList = list.map((val) => {
@@ -103,9 +107,9 @@ function App() {
     setIsOpen(false);
   }
 
-  // function refreshPage() {
-  //   window.location.reload();
-  // }
+  function refreshPage() {
+    window.location.reload();
+  }
 
   function saveToDoListInput() {
     setList([...list, currentToDoListInput]);
@@ -242,25 +246,25 @@ function App() {
               </div>
               <div className={"align-items-start back"}>
                 <div id="b1" className={"back-content"}>
-                  <div id={"Todo"}className="container">
-                  <div className={"content"}>
-                    <h2>Create a To-Do List:</h2>
-                    <input
-                      type="text"
-                      placeholder="enter task"
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setCurrentToDoListInput(e.target.value);
-                      }}
-                      value={currentToDoListInput}
-                    ></input>
-                    <button type="submit" onClick={saveToDoListInput}>
-                      add
-                    </button>
+                  <div id={"Todo"} className="container">
+                    <div className={"content"}>
+                      <h2>Create a To-Do List:</h2>
+                      <input
+                        type="text"
+                        placeholder="enter task"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          setCurrentToDoListInput(e.target.value);
+                        }}
+                        value={currentToDoListInput}
+                      ></input>
+                      <button type="submit" onClick={saveToDoListInput}>
+                        add
+                      </button>
 
-                    <h4>Click checkmark to finish a task and get a clue!</h4>
-                    <h4>{TaskList}</h4>
+                      <h4>Click checkmark to finish a task and get a clue!</h4>
+                      <h4>{TaskList}</h4>
+                    </div>
                   </div>
-                </div>
                 </div>
               </div>
             </div>
@@ -346,47 +350,13 @@ function App() {
             </button>
           )}
         </div>
-        <div className={"sidebar"}>
-          <h1>Instructions:</h1>
-          <p>1. Create a To-Do list!</p>
-          <p>2. Complete tasks to reveal clues!</p>
-          <p>3. Collect clues to solve the mystery!</p>
-          <p>4. Attempt to solve as you</p>
-          <p>complete your tasks!</p>
-          <img
-            src="glass.png"
-            style={{
-              height: 150,
-              position: "absolute",
-              right: "55px",
-              top: "500px",
-            }}
-          />
-        </div>
+        <SideInstructions />
       </div>
-      <Modal
-        className={"modalstyle"}
+      <LoginModal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        shouldCloseOnOverlayClick={true}
-        shouldCloseOnEsc={true}
-        contentLabel="Example Modal"
-      >
-        <form className={"formstyle"}>
-          <label htmlFor={"username"}>Username</label>
-          <input id={"username"} type={"text"} />
-          <div></div>
-          <label htmlFor={"password"}> Password</label>
-          <input id={"password"} type={"password"} />
-          <button
-            id={"btnform"}
-            className={"btn btn-dark btn-lg"}
-            onClick={login}
-          >
-            Submit
-          </button>
-        </form>
-      </Modal>
+        handleModalOpen={handleModalOpen}
+        handleLogin={handleLogin}
+      />
     </>
   );
 }
