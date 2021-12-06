@@ -10,6 +10,7 @@ import Services from "../server/Services";
 import LoginModal from "./Components/loginModal";
 import SideInstructions from "./Components/SideInstructions";
 import TodoList from "./Components/TodoList";
+
 // import TextModal from "./Components/TextModal";
 
 function App() {
@@ -121,7 +122,6 @@ function App() {
   function closeModal() {
     setIsOpen(false);
   }
-
   function saveToDoListInput() {
     setList([...list, currentToDoListInput]);
     let data = {
@@ -317,6 +317,8 @@ function App() {
 
                     <h2 id={"TodoH2"} style={{fontWeight: "bolder"}}>Create a To-Do List:</h2>
                     <input
+                      className={"InputTodo"}
+                      id={"CursorChange"}
                       type="text"
                       placeholder="enter list title"
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
