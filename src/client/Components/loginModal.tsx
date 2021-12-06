@@ -35,11 +35,11 @@ const LoginModal = ({isOpen, handleModalOpen, handleLogin}) => {
       shouldCloseOnEsc={true}
       contentLabel="Example Modal"
     >
-      <form className={"formstyle"}>
-        <label htmlFor={"username"}>Username</label>
+      <form style={{fontWeight: "bolder"}} className={"formstyle"}>
+        <label htmlFor={"username"}style={{fontWeight: "bolder"}}>Username</label>
         <input id={"username"} type={"text"} />
         <div></div>
-        <label htmlFor={"password"}> Password</label>
+        <label htmlFor={"password"}style={{fontWeight: "bolder"}}> Password</label>
         <input id={"password"} type={"password"} />
         <button
           id={"btnform"}
