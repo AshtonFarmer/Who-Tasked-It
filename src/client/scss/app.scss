@@ -23,7 +23,9 @@ $dark: #343a40;
 
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
-
+a {
+  cursor: url("/public/Cursor_32x32_transparent.png"), default;
+}
 
 body{
   font-weight: bolder;
@@ -62,14 +64,17 @@ body{
   margin: 50px;
   cursor: pointer;
   transition: transform 0.5s;
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
 }
 
 button:focus {
   outline: none;
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
 }
 
 button:hover i {
   color: rgb(102, 102, 102);
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
 }
 
 i {
@@ -201,6 +206,7 @@ i {
   background-image: url("../assets/cover2.png");
   font-size: xx-large;
   width: 11em;
+  z-index: 1;
 }
 
 #f2 {
@@ -209,16 +215,9 @@ left: 2.4em;
 position: relative;
 }
 
-// #second-page {
-//   margin: 2px;
-//   left: 123px;
-//   height: 13em;
-//   width: 15em;
-//   background-image: url("/public/man.jpg");
-//   border: black solid 5px;
-//   background-size: cover;
-//   position: relative;
-// }
+
+
+
 
 .modalstyle {
   background-color: rgb(255, 255, 255, 0.8);
@@ -248,6 +247,7 @@ position: relative;
   position: absolute;
   left: 30px;
   margin-top: 8px;
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
 }
 
 #Cluebanner {
@@ -262,8 +262,8 @@ position: relative;
 }
 
 #Todo {
-  top: 1rem;
-  height: 510rem;
+  top: 2rem;
+  height: 33rem;
   position: relative;
 }
 
@@ -286,6 +286,10 @@ position: relative;
 #Numero {
   right: -0.3em;
   position: relative;
+}
+
+#CursorChange {
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
 }
 
 #list {
@@ -320,4 +324,24 @@ position: relative;
   height: 156px;
   top: -7px;
   position: relative;
+}
+
+.InputTodo{
+  position: relative;
+  left: 6rem;
+}
+
+.BtnTodo{
+  position: relative;
+  left: 6rem;
+}
+
+#TodoH2{
+  position: relative;
+  left: 5rem;
+}
+
+#TodoH4{
+  position: relative;
+  top: 0.5rem;
 }
