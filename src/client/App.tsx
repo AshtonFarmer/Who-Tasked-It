@@ -259,8 +259,8 @@ function App() {
             <div id="p1" ref={paper1} className={"paper"}>
               <div className={"front"}>
                 <div id="f1" className={"m-2 p-1 front-content"}>
-                  <h1 className={"m-0 book-title"}>Who Task'd It?</h1>
-                  <img id={"Cluebanner"} src="clueban.jpg" />
+                  <h1 className={"m-0 book-title"} style={{fontWeight: "bolder"}}>Who Task'd It?</h1>
+                  <img id={"Cluebanner"} src="title.jpg" />
                   {!isLoggedIn && (
                     <button
                       id={"CursorChange"}
@@ -274,38 +274,20 @@ function App() {
               </div>
               <div className={"align-items-start back"}>
                 <div id="b1" className={"back-content"}>
-                  PAGE 1
+                  <div id={"Todo"} className="container">
+                    <div className={"content"} style={{fontWeight: "bolder"}} >
+                      <h1 style={{fontWeight: "bolder"}}>Saved To-Do lists:</h1>
+                      <p>{mystery}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-
             <div id="p2" ref={paper2} className={"paper"}>
               <div className={"front"}>
                 <div id={"Suspect"} className="container">
-                  <div id="f2" className={"front-content"}>
-                    <h1>Suspect List</h1>
-                    <ul>
-                      <ul>{SuspectList}</ul>
-                    </ul>
-                    <h1>Clues</h1>
-                    <div className={"row"}>
-                      <div className={"col"}>
-                        <h2>Weapons</h2>
-                        <ul>{WeaponList}</ul>
-                      </div>
-                      <div className={"col"}>
-                        <h2>Locations</h2>
-                        <ul>{LocationList}</ul>
-                        <button
-                          id={"CursorChange"}
-                          className={"btn btn-lg btn-dark"}
-                          style={{ position: "relative", right: "35px" }}
-                        >
-                          Solve
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                  <div id="f2" className={"front-content"}></div>
+                  <h1 id={"f2"} style={{fontWeight: "bolder"}}>Solved Mysteries</h1>
                 </div>
               </div>
               <div className={"back"}>
@@ -330,7 +312,6 @@ function App() {
                     >
                       add
                     </button>
-
                     <h4 id={"TodoH4"}>Click checkmark to finish a task and get a clue!</h4>
                     <h4>{TaskList}</h4>
                     </div>
@@ -342,38 +323,56 @@ function App() {
               <div className={"front"}>
                 <div id="f3" className={"front-content"}>
                   <div className={"content"}>
-                    <div className="container">
-                      <h1>Your Solved Mysteries:</h1>
-                    </div>
+                    <h1 style={{fontWeight: "bolder"}}>Clues</h1>
                   </div>
                 </div>
               </div>
               <div className={"back"}>
                 <div id="b3" className={"back-content"}>
-                  <h1>Credits:</h1>
+                    <h1 style={{
+                      position: "relative",
+    top: 13, fontWeight: "bolder"}}>Credits:</h1>
 
-                  <a id={"CursorChange"} href={"https://github.com/david90937"}>
-                    <img src="github.png" />
-                  </a>
-                  <h2>DAVID - back end development</h2>
+                    <a href={"https://github.com/david90937"}>
+                    <img style={{
+                      position: "relative",
+                      top: 48, left: -145
+                    }} src="github.png" />
+                    </a>
+                    <h2 style={{
+                      position: "relative",
+    top: 17, right: -20, fontWeight: "bolder"}}>DAVID - back end development</h2>
 
-                  <a id={"CursorChange"} href={"https://github.com/Zomievey"}>
-                    <img src="github.png" />
-                  </a>
-                  <h2>HAYLEE - front end development</h2>
-
-                  <a id={"CursorChange"} href={"https://github.com/dmcleg"}>
-                    <img src="github.png" />
-                  </a>
-                  <h2>DREW - UX/UI development</h2>
-
-                  <a
-                    id={"CursorChange"}
-                    href={"https://github.com/ashtonfarmer"}
-                  >
-                    <img src="github.png" />
-                  </a>
-                  <h2>ASHTON - front end development</h2>
+                    <a href={"https://github.com/Zomievey"}>
+                    <img style={{
+                      position: "relative",
+                      top: 26,
+                      right: 158,
+                    }} src="github.png" />
+                    </a>
+                    <h2 style={{
+                      position:"relative",
+                      top: -5,
+                      right: -12, fontWeight: "bolder"}}>HAYLEE - front end development</h2>
+                    <a href={"https://github.com/ashtonfarmer"}>
+                    <img style={{position: "relative",
+    top: 10,
+    right: 170 }}src="github.png" />
+                    </a>
+                    <h2 style={{
+                     right: -6,
+                     position: "relative",
+                     top: -21, fontWeight: "bolder"}}>ASHTON - front end development</h2>
+                    <a href={"https://github.com/dmcleg"}>
+                    <img style={{position: "relative",
+    top: -7,
+    right: 110}}src="github.png" />
+                    </a>
+                    <h2 style={{
+                    right: -36,
+                    position: "relative",
+                    top: -38, fontWeight: "bolder"}}>DREW - UX/UI development</h2>
+                   <img id={"backbanner"} src="map.jfif" />
                 </div>
               </div>
             </div>
