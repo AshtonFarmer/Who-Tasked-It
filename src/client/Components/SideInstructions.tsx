@@ -11,7 +11,7 @@ import React, {
 
     return (
         <div className={"sidebar"}>
-          <h1 id={"InstructionStyle"}>Instructions:</h1>
+          <h1 id={"InstructionStyle"} style={{fontWeight: "bolder"}}>Instructions:</h1>
           <div id={"Numero"}>
           <p>1. Create a To-Do list!</p>
           <p>2. Complete tasks to reveal clues!</p>
@@ -21,11 +21,12 @@ import React, {
           </div>
           <img id={"mag"}
             src="glass.png"
-            style={{
-              height: 150,
+          style={{
+              width: 150,
+              height: 160,
               position: "absolute",
-              right: "55px",
-              top: "500px",
+              right: "50px",
+              top: "485px",
             }}
           />
         </div>

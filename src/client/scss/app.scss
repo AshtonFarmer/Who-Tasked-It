@@ -23,7 +23,16 @@ $dark: #343a40;
 
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
+
+
+body{
+  font-weight: bolder;
+  overflow-x: hidden;
+}
+
 * {
+ 
+  font-weight: bolder;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -187,18 +196,29 @@ i {
 }
 
 .sidebar {
+
   background-color: rgb(255, 255, 255, 0.8);
   background-image: url("../assets/cover2.png");
-  background-position: center;
   font-size: xx-large;
+  width: 11em;
 }
 
-#Suspect {
-  top: -103px;
-  height: 510px;
-  position: relative;
-  align-items: center;
+#f2 {
+   top: 1em;
+left: 2.4em;
+position: relative;
 }
+
+// #second-page {
+//   margin: 2px;
+//   left: 123px;
+//   height: 13em;
+//   width: 15em;
+//   background-image: url("/public/man.jpg");
+//   border: black solid 5px;
+//   background-size: cover;
+//   position: relative;
+// }
 
 .modalstyle {
   background-color: rgb(255, 255, 255, 0.8);
@@ -217,6 +237,7 @@ i {
 }
 
 .formstyle {
+  font-weight: bolder !important;
   justify-content: center;
   align-items: center;
   display: table-caption;
@@ -225,8 +246,8 @@ i {
 #btnform {
   display: flex;
   position: absolute;
-  left: 26px;
-  margin-top: 7px;
+  left: 30px;
+  margin-top: 8px;
 }
 
 #Cluebanner {
@@ -235,7 +256,9 @@ i {
   margin: 10px;
   border-radius: 15px;
   border: solid 3px grey;
-  image-rendering: pixelated;
+ 
+  position: relative;
+  top: -0.5em;
 }
 
 #Todo {
@@ -244,16 +267,20 @@ i {
   position: relative;
 }
 
-#mag {
-  height: 5em;
-  position: absolute;
-  right: 2em;
-  top: 17em;
-  image-rendering: -webkit-optimize-contrast;
-}
+// #mag {
+//   height: 5em;
+//   position: absolute;
+//   right: 2em;
+//   top: 17em;
+//   image-rendering: -webkit-optimize-contrast;
+// }
 
 #InstructionStyle {
-  padding: 0.5em;
+  margin-block-end: revert;
+  width: 190px;
+  right: -4rem;
+  position: relative;
+  top: 10px;
 }
 
 #Numero {
@@ -269,5 +296,28 @@ i {
 
 #check {
   margin: 0.6em;
+  position: relative;
+}
+
+#myAudio {
+  background-color: black;
+  background: beige;
+  filter: invert(1);
+
+  height: 1em;
+  width: 100%;
+
+  border: black;
+  border: 1em;
+  position: absolute;
+
+
+
+}
+
+#backbanner {
+  right: 8px;
+  height: 156px;
+  top: -7px;
   position: relative;
 }
