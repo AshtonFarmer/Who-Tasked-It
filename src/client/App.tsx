@@ -10,6 +10,7 @@ import Services from "../server/Services";
 import LoginModal from "./Components/loginModal";
 import SideInstructions from "./Components/SideInstructions";
 import TodoList from "./Components/TodoList";
+import { container } from "webpack";
 
 // import TextModal from "./Components/TextModal";
 
@@ -41,7 +42,7 @@ function App() {
     "_____",
     "_____",
     "_____",
-    "_____"
+    "_____",
   ]);
 
   const handleModalOpen = (val) => setIsOpen(val);
@@ -70,8 +71,15 @@ function App() {
   });
 
   const storedLists = savedLists.map((val) => {
-    return <TodoList text={val.list_name} setActiveList={setActiveList} setCounter={SetCounter} counter={counter}></TodoList>
-  })
+    return (
+      <TodoList
+        text={val.list_name}
+        setActiveList={setActiveList}
+        setCounter={SetCounter}
+        counter={counter}
+      ></TodoList>
+    );
+  });
 
   useEffect(() => {
     let mounted = true;
@@ -90,18 +98,18 @@ function App() {
   // May need to add a different counter here to prevent for calling on each render
   useEffect(() => {
     let mounted = true;
-    Services.getLists().then(res =>{
-      if (mounted){
-        setSavedLists(res)
+    Services.getLists().then((res) => {
+      if (mounted) {
+        setSavedLists(res);
       }
       return () => (mounted = false);
-    })
-  }, [counter])
+    });
+  }, [counter]);
 
   useEffect(() => {
-    let mysterySolution = getMysterySolution()
-    mysterySolution.then(res => setSolution(res));
-  }, [])
+    let mysterySolution = getMysterySolution();
+    mysterySolution.then((res) => setSolution(res));
+  }, []);
 
   // Business Logic
   let numOfPapers = 3;
@@ -126,7 +134,7 @@ function App() {
     setList([...list, currentToDoListInput]);
     let data = {
       content: currentToDoListInput,
-      list_name: activeList
+      list_name: activeList,
     };
     fetch("/tasks", {
       method: "POST",
@@ -143,8 +151,8 @@ function App() {
     let result = await Services.getIntialClues();
     let finalResult = await Promise.all(result);
     console.log(finalResult);
-    return finalResult
-  }
+    return finalResult;
+  };
 
   function openBook() {
     book.current!.style.transform = "translateX(50%)";
@@ -215,48 +223,47 @@ function App() {
   // The clues need to be changed to go into database so that they will persist across server refreshes. Not a top-priority.
   async function toDoListItemClicked(id: number) {
     Services.DeleteTask(id);
-    let random = (Math.round(Math.random() * (solution.length - 1)));
-    if (random == 0){
+    let random = Math.round(Math.random() * (solution.length - 1));
+    if (random == 0) {
       blanks.splice(0, 1, Object(solution[0]));
     }
-    if (random == 1){
+    if (random == 1) {
       blanks.splice(1, 1, Object(solution[1]));
     }
-    if (random == 2){
+    if (random == 2) {
       blanks.splice(2, 1, Object(solution[2]));
     }
-    if (random == 3){
+    if (random == 3) {
       blanks.splice(3, 1, Object(solution[3]));
     }
-    if (random == 4){
+    if (random == 4) {
       blanks.splice(4, 1, Object(solution[4]));
     }
-    if (random == 5){
+    if (random == 5) {
       blanks.splice(5, 1, Object(solution[5]));
       blanks.splice(8, 1, Object(solution[8]));
     }
-    if (random == 6){
+    if (random == 6) {
       blanks.splice(6, 1, Object(solution[6]));
     }
-    if (random == 7){
+    if (random == 7) {
       blanks.splice(7, 1, Object(solution[7]));
     }
-    if (random == 8){
+    if (random == 8) {
       blanks.splice(9, 1, Object(solution[9]));
     }
     SetCounter(counter + 1);
     //SetClues([...clues, await Services.getClue()]);
   }
 
-  function handleCreateTodoList(){
+  function handleCreateTodoList() {
     let data = {
       list_name: activeList,
-      user_id: 1
-    }
+      user_id: 1,
+    };
     console.log(data);
-    Services.createTodoList(data)
+    Services.createTodoList(data);
   }
-
 
   return (
     <>
@@ -277,13 +284,17 @@ function App() {
             <div id="p1" ref={paper1} className={"paper"}>
               <div className={"front"}>
                 <div id="f1" className={"m-2 p-1 front-content"}>
-                  <h1 className={"m-0 book-title"} style={{fontWeight: "bolder"}}>Who Task'd It?</h1>
+                  <h1
+                    className={"m-0 book-title"}
+                    style={{ fontWeight: "bolder" }}
+                  >
+                    Who Task'd It?
+                  </h1>
                   <img id={"Cluebanner"} src="title.jpg" />
                   {!isLoggedIn && (
-
-                    <button id={"CursorChange"}
+                    <button
+                      id={"CursorChange"}
                       onClick={openLoginModal}
-
                       className={"btn btn-dark btn-lg"}
                     >
                       Login
@@ -294,8 +305,10 @@ function App() {
               <div className={"align-items-start back"}>
                 <div id="b1" className={"back-content"}>
                   <div id={"Todo"} className="container">
-                    <div className={"content"} style={{fontWeight: "bolder"}} >
-                      <h1 style={{fontWeight: "bolder"}}>Saved To-Do lists:</h1>
+                    <div className={"content"} style={{ fontWeight: "bolder" }}>
+                      <h1 style={{ fontWeight: "bolder" }}>
+                        Saved To-Do lists:
+                      </h1>
                       <ul>{storedLists}</ul>
                     </div>
                   </div>
@@ -306,51 +319,57 @@ function App() {
               <div className={"front"}>
                 <div id={"Suspect"} className="container">
                   <div id="f2" className={"front-content"}></div>
-                  <h1 id={"f2"} style={{fontWeight: "bolder"}}>Solved Mysteries</h1>
-                  <p>{mystery}</p>
+                  <h1 id={"f2"} style={{ fontWeight: "bolder" }}>
+                    Solved Mysteries
+                  </h1>
+                  <p id={"mtext"}>{mystery}</p>
                 </div>
               </div>
               <div className={"back"}>
                 <div id="b2" className={"back-content"}>
                   <div id={"Todo"} className="container">
                     <div className="content">
+                      <h2 id={"TodoH2"} style={{ fontWeight: "bolder" }}>
+                        Create a To-Do List:
+                      </h2>
+                      <input style={{ position: "relative",
+    left: 33 }}
+                        className={"InputTodo"}
+                        id={"CursorChange"}
+                        type="text"
+                        placeholder="Enter List Title"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          setActiveList(e.target.value);
+                        }}
+                        value={activeList}
+                      ></input>
+                      {/* <button type="submit" onClick={handleCreateTodoList}>
+                        Save
+                      </button> */}
+                      <input
+                        className={"InputTodo"}
+                        id={"CursorChange"}
+                        type="text"
+                        placeholder="enter task"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          setCurrentToDoListInput(e.target.value);
+                        }}
+                        value={currentToDoListInput}
+                      ></input>
+                      <button
+                        className={"BtnTodo"}
+                        id={"CursorChange"}
+                        type="submit"
+                        onClick={saveToDoListInput}
+                      >
+                        add
+                      </button>
 
-                    <h2 id={"TodoH2"} style={{fontWeight: "bolder"}}>Create a To-Do List:</h2>
-                    <input
-                      className={"InputTodo"}
-                      id={"CursorChange"}
-                      type="text"
-                      placeholder="enter list title"
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setActiveList(e.target.value);
-                      }}
-                      value={activeList}
-                    ></input>
-                    <button type="submit" onClick={handleCreateTodoList}>
-                      Create List
-                    </button>
-                    <input
-                      className={"InputTodo"}
-                      id={"CursorChange"}
-                      type="text"
-                      placeholder="enter task"
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setCurrentToDoListInput(e.target.value);
-                      }}
-                      value={currentToDoListInput}
-                    ></input>
-                    <button className={"BtnTodo"}
-                      id={"CursorChange"}
-                      type="submit"
-                      onClick={saveToDoListInput}
-                    >
-                      add
-                    </button>
+                      <h4 id={"TodoH4"} style={{ fontWeight: "bolder" }}>
+                        Click checkmark to finish a task and get a clue!
+                      </h4>
 
-
-                    <h4 id={"TodoH4"} style={{fontWeight: "bolder"}}>Click checkmark to finish a task and get a clue!</h4>
-
-                    <h4>{TaskList}</h4>
+                      <h4>{TaskList}</h4>
                     </div>
                   </div>
                 </div>
@@ -358,59 +377,113 @@ function App() {
             </div>
             <div id="p3" ref={paper3} className={"paper"}>
               <div className={"front"}>
-                <div id="f3" className={"front-content"}>
-                  <div className={"content"}>
-                    <h1 style={{fontWeight: "bolder"}}>Clues</h1>
-                    <p>{mystery}</p>
+                <div
+                   id="f3" className={"front-content"}>
+                  <div className={"content"} >
+                    <h1 style={{
+                        top: -29,
+                        position: "relative",
+                        fontWeight: "bolder",
+                        right: -168,
+                      }}
+                    >
+                      Clues
+                    </h1>
+                    <p id={
+                        "Clue"
+                    }>{mystery}</p>
                   </div>
                 </div>
               </div>
               <div className={"back"}>
                 <div id="b3" className={"back-content"}>
-                    <h1 style={{
+                  <h1
+                    style={{
                       position: "relative",
-    top: 13, fontWeight: "bolder"}}>Credits:</h1>
+                      top: 13,
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    Credits:
+                  </h1>
 
-                    <a id={"CursorChange"} href={"https://github.com/david90937"}>
-                    <img style={{
+                  <a id={"CursorChange"} href={"https://github.com/david90937"}>
+                    <img
+                      style={{
+                        position: "relative",
+                        top: 48,
+                        left: -145,
+                      }}
+                      src="github.png"
+                    />
+                  </a>
+                  <h2
+                    style={{
                       position: "relative",
-                      top: 48, left: -145
-                    }} src="github.png" />
-                    </a>
-                    <h2 style={{
-                      position: "relative",
-    top: 17, right: -20, fontWeight: "bolder"}}>DAVID - back end development</h2>
+                      top: 17,
+                      right: -20,
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    DAVID - back end development
+                  </h2>
 
-                    <a id={"CursorChange"} href={"https://github.com/Zomievey"}>
-                    <img style={{
+                  <a id={"CursorChange"} href={"https://github.com/Zomievey"}>
+                    <img
+                      style={{
+                        position: "relative",
+                        top: 26,
+                        right: 158,
+                      }}
+                      src="github.png"
+                    />
+                  </a>
+                  <h2
+                    style={{
                       position: "relative",
-                      top: 26,
-                      right: 158,
-                    }} src="github.png" />
-                    </a>
-                    <h2 style={{
-                      position:"relative",
                       top: -5,
-                      right: -12, fontWeight: "bolder"}}>HAYLEE - front end development</h2>
-                    <a id={"CursorChange"} href={"https://github.com/ashtonfarmer"}>
-                    <img style={{position: "relative",
-    top: 10,
-    right: 170 }}src="github.png" />
-                    </a>
-                    <h2 style={{
-                     right: -6,
-                     position: "relative",
-                     top: -21, fontWeight: "bolder"}}>ASHTON - front end development</h2>
-                    <a id={"CursorChange"} href={"https://github.com/dmcleg"}>
-                    <img style={{position: "relative",
-    top: -7,
-    right: 110}}src="github.png" />
-                    </a>
-                    <h2 style={{
-                    right: -36,
-                    position: "relative",
-                    top: -38, fontWeight: "bolder"}}>DREW - UX/UI development</h2>
-                   <img id={"backbanner"} src="map.jfif" />
+                      right: -12,
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    HAYLEE - front end development
+                  </h2>
+                  <a
+                    id={"CursorChange"}
+                    href={"https://github.com/ashtonfarmer"}
+                  >
+                    <img
+                      style={{ position: "relative", top: 10, right: 170 }}
+                      src="github.png"
+                    />
+                  </a>
+                  <h2
+                    style={{
+                      right: -6,
+                      position: "relative",
+                      top: -21,
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    ASHTON - front end development
+                  </h2>
+                  <a id={"CursorChange"} href={"https://github.com/dmcleg"}>
+                    <img
+                      style={{ position: "relative", top: -7, right: 110 }}
+                      src="github.png"
+                    />
+                  </a>
+                  <h2
+                    style={{
+                      right: -36,
+                      position: "relative",
+                      top: -38,
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    DREW - UX/UI development
+                  </h2>
+                  <img id={"backbanner"} src="map.jfif" />
                 </div>
               </div>
             </div>
