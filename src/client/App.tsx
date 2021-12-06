@@ -13,6 +13,7 @@ import Task from "./Components/Task";
 import Services from "../server/Services";
 import LoginModal from "./Components/loginModal";
 import SideInstructions from "./Components/SideInstructions";
+// import TextModal from "./Components/TextModal";
 
 function App() {
   const prevBtn = useRef<HTMLButtonElement>(null);
@@ -23,7 +24,9 @@ function App() {
   const paper2 = useRef<HTMLDivElement>(null);
   const paper3 = useRef<HTMLDivElement>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  // const [TextisLoggedIn, setTextIsLoggedIn] = useState<boolean>(false);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  // const [modalTextIsOpen, setTextIsOpen] = useState<boolean>(false);
   const [list, setList] = useState<string[]>([]);
   const [currentToDoListInput, setCurrentToDoListInput] = useState<string>("");
   const [currentState, setCurrentState] = useState<number>(1);
@@ -39,8 +42,12 @@ function App() {
     "_____",
     "_____",
   ]);
+
   const handleModalOpen = (val) => setIsOpen(val);
+  // const handleTextModalOpen = (val) => setTextIsOpen(val);
+
   const handleLogin = (val) => setIsLoggedIn(val);
+  // const handleTextLogin = (val) => setTextIsLoggedIn(val);
 
   let blankArray = blanks.map((val) => {
     return val;
@@ -99,7 +106,7 @@ function App() {
     closeModal();
   }
 
-  function openModal() {
+  function openLoginModal() {
     setIsOpen(true);
   }
 
@@ -110,6 +117,26 @@ function App() {
   function refreshPage() {
     window.location.reload();
   }
+
+  // function Text(e: FormEvent) {
+  //   e.preventDefault();
+  //   //action for logging in
+  //   //TODO: call backend and login
+  //   setTextIsLoggedIn(true);
+  //   closeTextModal();
+  // }
+
+  // function openTextModal() {
+  //   setTextIsOpen(true);
+  // }
+
+  // function closeTextModal() {
+  //   setTextIsOpen(false);
+  // }
+
+  // function refreshtextPage() {
+  //   window.location.reload();
+  // }
 
   function saveToDoListInput() {
     setList([...list, currentToDoListInput]);
@@ -235,8 +262,10 @@ function App() {
                   <h1 className={"m-0 book-title"} style={{fontWeight: "bolder"}}>Who Task'd It?</h1>
                   <img id={"Cluebanner"} src="title.jpg" />
                   {!isLoggedIn && (
+
                     <button id={"CursorChange"}
                       onClick={openModal}
+
                       className={"btn btn-dark btn-lg"}
                     >
                       Login
@@ -255,7 +284,6 @@ function App() {
                 </div>
               </div>
             </div>
-
             <div id="p2" ref={paper2} className={"paper"}>
               <div className={"front"}>
                 <div id={"Suspect"} className="container">
@@ -267,7 +295,10 @@ function App() {
                 <div id="b2" className={"back-content"}>
                   <div id={"Todo"} className="container">
                     <div className="content">
+
                     <h2 id={"TodoH2"} style={{fontWeight: "bolder"}}>Create a To-Do List:</h2>
+
+                   
                     <input
                       className={"InputTodo"}
                       id={"CursorChange"}
@@ -286,7 +317,9 @@ function App() {
                       add
                     </button>
 
+
                     <h4 id={"TodoH4"} style={{fontWeight: "bolder"}}>Click checkmark to finish a task and get a clue!</h4>
+
                     <h4>{TaskList}</h4>
                     </div>
                   </div>
@@ -303,7 +336,6 @@ function App() {
               </div>
               <div className={"back"}>
                 <div id="b3" className={"back-content"}>
-                  
                     <h1 style={{
                       position: "relative",
     top: 13, fontWeight: "bolder"}}>Credits:</h1>
