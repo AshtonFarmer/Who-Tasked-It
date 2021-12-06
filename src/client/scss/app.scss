@@ -25,8 +25,10 @@ $dark: #343a40;
 
 
 a {
-  cursor: url("../assets/magnifier-removebg-preview.png"), default;
+  cursor: url("/public/Cursor_32x32_transparent.png"), default;
 }
+
+
 body{
   font-weight: bolder;
   overflow-x: hidden;
@@ -63,18 +65,21 @@ body{
   margin: 50px;
   cursor: pointer;
   transition: transform 0.5s;
-  cursor: url("../assets/Cursor\ 32x32\ transparent.png"), auto;
-}
+
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
+
 
 button:focus {
   outline: none;
-  cursor: url("../assets/Cursor\ 32x32\ transparent.png"), auto;
-}
+
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
+
 
 button:hover i {
   color: rgb(102, 102, 102);
-  cursor: url("../assets/Cursor\ 32x32\ transparent.png"), auto;
-}
+
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
+
 
 i {
   color: gray;
@@ -212,29 +217,6 @@ i {
   z-index: 1;
 }
 
-#Suspect {
-  top: -103px;
-  height: 510px;
-  position: relative;
-  align-items: center;
-}
-
-.modalloginstyle {
-  background-color: rgb(255, 255, 255, 0.8);
-  backface-visibility: hidden;
-  border-left: 3px antiquewhite;
-  background-image: url("../assets/paper.jpg");
-  padding: 1rem;
-  margin: 1rem;
-  bottom: 1rem;
-  height: 13rem;
-  position: absolute;
-  left: 6rem;
-  top: 13rem;
-  border-radius: 15px;
-  border: solid 3px grey;
-}
-
 #f2 {
    top: 1em;
 left: 2.4em;
@@ -267,9 +249,11 @@ position: relative;
 #btnform {
   display: flex;
   position: absolute;
-  left: 26px;
-  margin-top: 7px;
-  cursor: url("../assets/Cursor\ 32x32\ transparent.png"), auto;
+
+  left: 30px;
+  margin-top: 8px;
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
+
 }
 
 #Cluebanner {
@@ -301,31 +285,8 @@ position: relative;
 }
 
 #CursorChange {
-  cursor: url("../assets/Cursor\ 32x32\ transparent.png"), auto;
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
 }
-
-.InputTodo{
-    position: relative;
-    left: 6rem;
-}
-
-.BtnTodo{
-    position: relative;
-    left: 6rem;
-}
-
-#TodoH2{
-    position: relative;
-    left: 5rem;
-}
-
-#TodoH4{
-    position: relative;
-    top: 0.5rem;
-  left: 30px;
-  margin-top: 8px;
-}
-
 
 #list {
   font-size: 2em;
@@ -354,4 +315,24 @@ position: relative;
   height: 156px;
   top: -7px;
   position: relative;
+}
+
+.InputTodo{
+  position: relative;
+  left: 6rem;
+}
+
+.BtnTodo{
+  position: relative;
+  left: 6rem;
+}
+
+#TodoH2{
+  position: relative;
+  left: 5rem;
+}
+
+#TodoH4{
+  position: relative;
+  top: 0.5rem;
 }

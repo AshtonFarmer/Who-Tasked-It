@@ -262,9 +262,10 @@ function App() {
                   <h1 className={"m-0 book-title"} style={{fontWeight: "bolder"}}>Who Task'd It?</h1>
                   <img id={"Cluebanner"} src="title.jpg" />
                   {!isLoggedIn && (
-                    <button
-                      id={"CursorChange"}
-                      onClick={openLoginModal}
+
+                    <button id={"CursorChange"}
+                      onClick={openModal}
+
                       className={"btn btn-dark btn-lg"}
                     >
                       Login
@@ -294,7 +295,10 @@ function App() {
                 <div id="b2" className={"back-content"}>
                   <div id={"Todo"} className="container">
                     <div className="content">
-                    <h2 id={"TodoH2"}>Create a To-Do List:</h2>
+
+                    <h2 id={"TodoH2"} style={{fontWeight: "bolder"}}>Create a To-Do List:</h2>
+
+                   
                     <input
                       className={"InputTodo"}
                       id={"CursorChange"}
@@ -312,7 +316,10 @@ function App() {
                     >
                       add
                     </button>
-                    <h4 id={"TodoH4"}>Click checkmark to finish a task and get a clue!</h4>
+
+
+                    <h4 id={"TodoH4"} style={{fontWeight: "bolder"}}>Click checkmark to finish a task and get a clue!</h4>
+
                     <h4>{TaskList}</h4>
                     </div>
                   </div>
@@ -333,7 +340,7 @@ function App() {
                       position: "relative",
     top: 13, fontWeight: "bolder"}}>Credits:</h1>
 
-                    <a href={"https://github.com/david90937"}>
+                    <a id={"CursorChange"} href={"https://github.com/david90937"}>
                     <img style={{
                       position: "relative",
                       top: 48, left: -145
@@ -343,7 +350,7 @@ function App() {
                       position: "relative",
     top: 17, right: -20, fontWeight: "bolder"}}>DAVID - back end development</h2>
 
-                    <a href={"https://github.com/Zomievey"}>
+                    <a id={"CursorChange"} href={"https://github.com/Zomievey"}>
                     <img style={{
                       position: "relative",
                       top: 26,
@@ -354,7 +361,7 @@ function App() {
                       position:"relative",
                       top: -5,
                       right: -12, fontWeight: "bolder"}}>HAYLEE - front end development</h2>
-                    <a href={"https://github.com/ashtonfarmer"}>
+                    <a id={"CursorChange"} href={"https://github.com/ashtonfarmer"}>
                     <img style={{position: "relative",
     top: 10,
     right: 170 }}src="github.png" />
@@ -363,7 +370,7 @@ function App() {
                      right: -6,
                      position: "relative",
                      top: -21, fontWeight: "bolder"}}>ASHTON - front end development</h2>
-                    <a href={"https://github.com/dmcleg"}>
+                    <a id={"CursorChange"} href={"https://github.com/dmcleg"}>
                     <img style={{position: "relative",
     top: -7,
     right: 110}}src="github.png" />
