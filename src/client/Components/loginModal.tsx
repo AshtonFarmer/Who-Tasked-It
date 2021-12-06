@@ -7,9 +7,7 @@ import React, {
 } from "react";
 import Modal from "react-modal";
 
-
-const LoginModal = ({isOpen, handleModalOpen, handleLogin}) => {
-
+const LoginModal = ({ isOpen, handleModalOpen, handleLogin }) => {
   function login(e: FormEvent) {
     e.preventDefault();
     //action for logging in
@@ -18,17 +16,17 @@ const LoginModal = ({isOpen, handleModalOpen, handleLogin}) => {
     closeModal();
   }
 
-  // function openModal() {
+  // function openLoginModal() {
   //   setIsOpen(true);
   // }
 
   function closeModal() {
     handleModalOpen(false);
   }
-  
+
   return (
     <Modal
-      className={"modalstyle"}
+      className={"modalloginstyle"}
       isOpen={isOpen}
       onRequestClose={closeModal}
       shouldCloseOnOverlayClick={true}

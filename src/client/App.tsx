@@ -13,6 +13,7 @@ import Task from "./Components/Task";
 import Services from "../server/Services";
 import LoginModal from "./Components/loginModal";
 import SideInstructions from "./Components/SideInstructions";
+// import TextModal from "./Components/TextModal";
 
 function App() {
   const prevBtn = useRef<HTMLButtonElement>(null);
@@ -23,7 +24,9 @@ function App() {
   const paper2 = useRef<HTMLDivElement>(null);
   const paper3 = useRef<HTMLDivElement>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  // const [TextisLoggedIn, setTextIsLoggedIn] = useState<boolean>(false);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  // const [modalTextIsOpen, setTextIsOpen] = useState<boolean>(false);
   const [list, setList] = useState<string[]>([]);
   const [currentToDoListInput, setCurrentToDoListInput] = useState<string>("");
   const [currentState, setCurrentState] = useState<number>(1);
@@ -39,8 +42,12 @@ function App() {
     "_____",
     "_____",
   ]);
+
   const handleModalOpen = (val) => setIsOpen(val);
+  // const handleTextModalOpen = (val) => setTextIsOpen(val);
+
   const handleLogin = (val) => setIsLoggedIn(val);
+  // const handleTextLogin = (val) => setTextIsLoggedIn(val);
 
   let blankArray = blanks.map((val) => {
     return val;
@@ -99,7 +106,7 @@ function App() {
     closeModal();
   }
 
-  function openModal() {
+  function openLoginModal() {
     setIsOpen(true);
   }
 
@@ -110,6 +117,26 @@ function App() {
   function refreshPage() {
     window.location.reload();
   }
+
+  // function Text(e: FormEvent) {
+  //   e.preventDefault();
+  //   //action for logging in
+  //   //TODO: call backend and login
+  //   setTextIsLoggedIn(true);
+  //   closeTextModal();
+  // }
+
+  // function openTextModal() {
+  //   setTextIsOpen(true);
+  // }
+
+  // function closeTextModal() {
+  //   setTextIsOpen(false);
+  // }
+
+  // function refreshtextPage() {
+  //   window.location.reload();
+  // }
 
   function saveToDoListInput() {
     setList([...list, currentToDoListInput]);
@@ -236,7 +263,8 @@ function App() {
                   <img id={"Cluebanner"} src="clueban.jpg" />
                   {!isLoggedIn && (
                     <button
-                      onClick={openModal}
+                      id={"CursorChange"}
+                      onClick={openLoginModal}
                       className={"btn btn-dark btn-lg"}
                     >
                       Login
@@ -246,25 +274,7 @@ function App() {
               </div>
               <div className={"align-items-start back"}>
                 <div id="b1" className={"back-content"}>
-                  <div id={"Todo"} className="container">
-                    <div className={"content"}>
-                      <h2>Create a To-Do List:</h2>
-                      <input
-                        type="text"
-                        placeholder="enter task"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          setCurrentToDoListInput(e.target.value);
-                        }}
-                        value={currentToDoListInput}
-                      ></input>
-                      <button type="submit" onClick={saveToDoListInput}>
-                        add
-                      </button>
-
-                      <h4>Click checkmark to finish a task and get a clue!</h4>
-                      <h4>{TaskList}</h4>
-                    </div>
-                  </div>
+                  PAGE 1
                 </div>
               </div>
             </div>
@@ -287,6 +297,7 @@ function App() {
                         <h2>Locations</h2>
                         <ul>{LocationList}</ul>
                         <button
+                          id={"CursorChange"}
                           className={"btn btn-lg btn-dark"}
                           style={{ position: "relative", right: "35px" }}
                         >
@@ -299,8 +310,31 @@ function App() {
               </div>
               <div className={"back"}>
                 <div id="b2" className={"back-content"}>
-                  <h1>Saved To-Do lists:</h1>
-                  <p>{mystery}</p>
+                  <div id={"Todo"} className="container">
+                    <div className="content">
+                    <h2 id={"TodoH2"}>Create a To-Do List:</h2>
+                    <input
+                      className={"InputTodo"}
+                      id={"CursorChange"}
+                      type="text"
+                      placeholder="enter task"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        setCurrentToDoListInput(e.target.value);
+                      }}
+                      value={currentToDoListInput}
+                    ></input>
+                    <button className={"BtnTodo"}
+                      id={"CursorChange"}
+                      type="submit"
+                      onClick={saveToDoListInput}
+                    >
+                      add
+                    </button>
+
+                    <h4 id={"TodoH4"}>Click checkmark to finish a task and get a clue!</h4>
+                    <h4>{TaskList}</h4>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -308,7 +342,9 @@ function App() {
               <div className={"front"}>
                 <div id="f3" className={"front-content"}>
                   <div className={"content"}>
-                    <h1>Your Solved Mysteries:</h1>
+                    <div className="container">
+                      <h1>Your Solved Mysteries:</h1>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -316,22 +352,25 @@ function App() {
                 <div id="b3" className={"back-content"}>
                   <h1>Credits:</h1>
 
-                  <a href={"https://github.com/david90937"}>
+                  <a id={"CursorChange"} href={"https://github.com/david90937"}>
                     <img src="github.png" />
                   </a>
                   <h2>DAVID - back end development</h2>
 
-                  <a href={"https://github.com/Zomievey"}>
+                  <a id={"CursorChange"} href={"https://github.com/Zomievey"}>
                     <img src="github.png" />
                   </a>
                   <h2>HAYLEE - front end development</h2>
 
-                  <a href={"https://github.com/dmcleg"}>
+                  <a id={"CursorChange"} href={"https://github.com/dmcleg"}>
                     <img src="github.png" />
                   </a>
                   <h2>DREW - UX/UI development</h2>
 
-                  <a href={"https://github.com/ashtonfarmer"}>
+                  <a
+                    id={"CursorChange"}
+                    href={"https://github.com/ashtonfarmer"}
+                  >
                     <img src="github.png" />
                   </a>
                   <h2>ASHTON - front end development</h2>
