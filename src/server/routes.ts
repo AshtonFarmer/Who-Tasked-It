@@ -5,9 +5,30 @@ import db from './db';
 const router = express.Router();
 
 // Returns all records for the table that is passed in.
-router.get('/gettasks', async (req, res) => {
+// router.get('/gettasks', async (req, res) => {
+//     try {
+//         res.json(await db.db_queries.allTasks())
+//     }
+//     catch(err){
+//         console.log(err);
+//         res.sendStatus(500);
+//     }
+// });
+
+router.get('/todolist/:list_name', async (req, res) => {
     try {
-        res.json(await db.db_queries.allTasks())
+        const list_name = req.params.list_name;
+        res.json(await db.db_queries.getTodoList(list_name))
+    }
+    catch(err){
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+router.get('/todolists', async (req, res) => {
+    try {
+        res.json(await db.db_queries.getTodoLists());
     }
     catch(err){
         console.log(err);
@@ -38,27 +59,99 @@ router.get('/gettask', async(req, res) => {
     }
 });
 
-router.get('/suspects', async(req, res)=> {
+// router.get('/suspects', async(req, res)=> {
+//     try {
+//         res.json(await db.db_queries.getRandomSuspect())
+//     }
+//     catch(err){
+//         console.log(err);
+//         res.sendStatus(500);
+//     }
+// })
+// router.get('/weapons', async(req, res)=> {
+//     try {
+//         res.json(await db.db_queries.getRandomWeapon())
+//     }
+//     catch(err){
+//         console.log(err);
+//         res.sendStatus(500);
+//     }
+// })
+// router.get('/locations', async(req, res)=> {
+//     try {
+//         res.json(await db.db_queries.getRandomLocation())
+//     }
+//     catch(err){
+//         console.log(err);
+//         res.sendStatus(500);
+//     }
+// })
+router.get('/firstperson', async(req, res)=> {
     try {
-        res.json(await db.db_queries.getRandomSuspect())
+        res.json(await db.db_queries.getFirstPerson())
     }
     catch(err){
         console.log(err);
         res.sendStatus(500);
     }
 })
-router.get('/weapons', async(req, res)=> {
+router.get('/secondperson', async(req, res)=> {
     try {
-        res.json(await db.db_queries.getRandomWeapon())
+        res.json(await db.db_queries.getSecondPerson())
     }
     catch(err){
         console.log(err);
         res.sendStatus(500);
     }
 })
-router.get('/locations', async(req, res)=> {
+router.get('/thirdperson', async(req, res)=> {
     try {
-        res.json(await db.db_queries.getRandomLocation())
+        res.json(await db.db_queries.getThirdPerson())
+    }
+    catch(err){
+        console.log(err);
+        res.sendStatus(500);
+    }
+})
+router.get('/firstplace', async(req, res)=> {
+    try {
+        res.json(await db.db_queries.getFirstPlace())
+    }
+    catch(err){
+        console.log(err);
+        res.sendStatus(500);
+    }
+})
+router.get('/secondplace', async(req, res)=> {
+    try {
+        res.json(await db.db_queries.getSecondPlace())
+    }
+    catch(err){
+        console.log(err);
+        res.sendStatus(500);
+    }
+})
+router.get('/firstobject', async(req, res)=> {
+    try {
+        res.json(await db.db_queries.getFirstObject())
+    }
+    catch(err){
+        console.log(err);
+        res.sendStatus(500);
+    }
+})
+router.get('/secondobject', async(req, res)=> {
+    try {
+        res.json(await db.db_queries.getSecondObject())
+    }
+    catch(err){
+        console.log(err);
+        res.sendStatus(500);
+    }
+})
+router.get('/thirdobject', async(req, res)=> {
+    try {
+        res.json(await db.db_queries.getThirdObject())
     }
     catch(err){
         console.log(err);
@@ -70,8 +163,20 @@ router.get('/locations', async(req, res)=> {
 router.post('/tasks', (req, res) => {
     try {
         const content = req.body.content;
-        console.log(content);
-        db.db_queries.createTask(content)
+        const list_name = req.body.list_name;
+        db.db_queries.createTask(content, list_name)
+        res.sendStatus(200);
+    }
+    catch(err){
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+router.post('/todolist', (req, res) => {
+    try {
+        const list_name = req.body.list_name;
+        const user_id = req.body.user_id;
+        db.db_queries.createTodoList(list_name, user_id);
         res.sendStatus(200);
     }
     catch(err){
@@ -107,5 +212,4 @@ router.delete('/tasks', (req, res) => {
         res.sendStatus(500);
     }
 });
-
 export default router;

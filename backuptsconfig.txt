@@ -1,26 +1,9 @@
-{
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
-  },
-  "include": [
-    "src"
-, "App.tsx", "index.tsx", "react-app-env.d.ts"  ]
-}
+//1st sentence
+"A dark night loomed during the amateur lacrosse tournament at which [firstPerson] was playing, deep within [firstPlace]."
+//2nd sentence
+"It was known that a certain artifact created by master artisan [secondPerson], [firstObject], would be on display in the [secondPlace]."
+//3rd sentence
+"Bad omens prevailed on that night, however. [thirdPerson], their heart full of jealousy, whipping out [secondObject], slew the good patron [firstPerson or secondPerson] in an act of ice-cold blood!"
+//4th sentence
+"I discerned that [thirdPerson] was the criminal at hand by finding their hair on [thirdObject]." 
+
