@@ -264,7 +264,7 @@ function App() {
                   {!isLoggedIn && (
 
                     <button id={"CursorChange"}
-                      onClick={openModal}
+                      onClick={openLoginModal}
 
                       className={"btn btn-dark btn-lg"}
                     >
