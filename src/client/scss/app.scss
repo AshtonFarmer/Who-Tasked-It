@@ -1,0 +1,341 @@
+// First override some or all individual color variables
+$primary: #25408f;
+$secondary: #8f5325;
+$success: #3e8d63;
+$info: #13101c;
+$warning: #945707;
+$danger: #d62518;
+$light: #f8f9fa;
+$dark: #343a40;
+
+// Then add them to your custom theme-colors map, together with any additional colors you might need
+// $theme-colors: (
+// 	primary: $primary,
+// 	secondary: $secondary,
+// 	success: $success,
+// 	info: $info,
+// 	warning: $warning,
+// 	danger: $danger,
+// 	light: $light,
+// 	dark: $dark,
+// 	// add any additional color below
+// );
+
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+
+a {
+  cursor: url("/public/Cursor_32x32_transparent.png"), default;
+}
+
+
+body{
+  font-weight: bolder;
+  overflow-x: hidden;
+}
+
+* {
+  font-weight: bolder;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Amatic SC", cursive;
+}
+
+.container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+#background {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../assets/foyer.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-x: hidden;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.navigation-button {
+  border: none;
+  background-color: transparent;
+  margin: 50px;
+  cursor: pointer;
+  transition: transform 0.5s;
+
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
+}
+
+
+button:focus {
+  outline: none;
+
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
+}
+
+
+button:hover i {
+  color: rgb(102, 102, 102);
+
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
+}
+
+
+i {
+  color: gray;
+  font-size: 2em;
+}
+
+/* Book */
+.book {
+  width: 400px;
+  height: 550px;
+  position: relative;
+  transition: transform 0.5s;
+}
+
+.paper {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  perspective: 1500px;
+}
+
+.front {
+  backface-visibility: hidden;
+  border-left: 3px antiquewhite;
+  background-image: url("../assets/cover2.png");
+}
+
+.front,
+.back {
+  border-left: #3d2505a6 6px solid;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: initial !important;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  transform-origin: left;
+  transition: transform 0.5s;
+  background-image: url("../assets/paper.jpg");
+}
+
+.front {
+  z-index: 1;
+}
+
+.back {
+  z-index: 0;
+}
+
+.front-content,
+.back-content {
+  position: relative;
+  right: 0.5em;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-content {
+  transform: rotateY(180deg);
+}
+
+/* Paper Flipped */
+.flipped .front,
+.flipped .back {
+  transform: rotateY(-180deg);
+}
+
+/* Paper Z-index */
+#p1 {
+  z-index: 3;
+}
+
+#p2 {
+  z-index: 2;
+}
+
+#p3 {
+  z-index: 1;
+
+}
+#p3 {
+  z-index: 1;
+}
+
+/* Customization */
+
+.book-title {
+  font-size: 3em;
+  position: relative;
+  top: -0.3em;
+}
+
+.cover-img {
+  border-radius: 30px;
+  width: 300px;
+  height: 400px;
+  object-fit: fill;
+  border: 3px rgb(133, 127, 127) solid;
+  padding: 10px;
+  margin: 10px;
+}
+
+#b1 {
+  padding: 20px;
+  text-align: center;
+  font-size: 1.2em;
+  justify-content: space-around;
+}
+
+#b1 h2 {
+  font-size: 2em;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#b1 p {
+  margin-bottom: 20px;
+}
+
+.sidebar {
+  background-color: rgb(255, 255, 255, 0.8);
+  background-image: url("../assets/cover2.png");
+  background-position: center;
+  font-size: xx-large;
+  width: 11em;
+  z-index: 1;
+}
+
+#f2 {
+   top: 1em;
+left: 2.4em;
+position: relative;
+}
+
+.modalloginstyle {
+  background-color: rgb(255, 255, 255, 0.8);
+  backface-visibility: hidden;
+  border-left: 3px antiquewhite;
+  background-image: url("../assets/paper.jpg");
+  padding: 1rem;
+  margin: 1rem;
+  bottom: 1rem;
+  height: 13rem;
+  position: absolute;
+  left: 6rem;
+  top: 13rem;
+  border-radius: 15px;
+  border: solid 3px grey;
+}
+
+.formstyle {
+  font-weight: bolder !important;
+  justify-content: center;
+  align-items: center;
+  display: table-caption;
+}
+
+#btnform {
+  display: flex;
+  position: absolute;
+
+  left: 30px;
+  margin-top: 8px;
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
+
+}
+
+#Cluebanner {
+  height: 380px;
+  width: 280px;
+  margin: 10px;
+  border-radius: 15px;
+  border: solid 3px grey;
+  image-rendering: pixelated;
+}
+
+#Todo {
+  top: 2rem;
+  height: 33rem;
+  position: relative;
+}
+
+#InstructionStyle {
+  margin-block-end: revert;
+  width: 190px;
+  right: -4rem;
+  position: relative;
+  top: 10px;
+}
+
+#Numero {
+  right: -0.3em;
+  position: relative;
+}
+
+#CursorChange {
+  cursor: url("/public/Cursor_32x32_transparent.png"), auto;
+}
+
+#list {
+  font-size: 2em;
+  margin-top: 0.6em;
+  margin-bottom: 0.3em;
+}
+
+#check {
+  margin: 0.6em;
+  position: relative;
+}
+
+#myAudio {
+  background-color: black;
+  background: beige;
+  filter: invert(1);
+  height: 1em;
+  width: 100%;
+  border: black;
+  border: 1em;
+  position: absolute;
+}
+
+#backbanner {
+  right: 8px;
+  height: 156px;
+  top: -7px;
+  position: relative;
+}
+
+.InputTodo{
+  position: relative;
+  left: 6rem;
+}
+
+.BtnTodo{
+  position: relative;
+  left: 6rem;
+}
+
+#TodoH2{
+  position: relative;
+  left: 5rem;
+}
+
+#TodoH4{
+  position: relative;
+  top: 0.5rem;
+}

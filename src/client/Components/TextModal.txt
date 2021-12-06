@@ -1,0 +1,50 @@
+// import React, {
+//   ChangeEvent,
+//   FormEvent,
+//   useEffect,
+//   useRef,
+//   useState,
+// } from "react";
+// import Modal from "react-modal";
+
+// const TextModal = ({ isTextOpen, handleTextModalOpen, handleTextLogin }) => {
+//   function Text(e: FormEvent) {
+//     e.preventDefault();
+//     //action for logging in
+//     //TODO: call backend and login
+//     handleTextLogin(true);
+//     closeTextModal();
+//   }
+
+//   // function openLoginModal() {
+//   //   setIsOpen(true);
+//   // }
+
+//   function closeTextModal() {
+//     handleTextModalOpen(false);
+//   }
+
+//   return (
+//     <Modal
+//       className={"modaltextstyle"}
+//       isTextOpen={isTextOpen}
+//       onRequestClose={closeTextModal}
+//       shouldCloseOnOverlayClick={true}
+//       shouldCloseOnEsc={true}
+//       contentLabel="Example Modal"
+//     >
+//       <form className={"formstyle"}>
+//         <label htmlFor={"username"}>Username</label>
+//         <input id={"username"} type={"text"} />
+//         <div></div>
+//         <label htmlFor={"password"}> Password</label>
+//         <input id={"password"} type={"password"} />
+//         <button id={"btnform"} className={"btn btn-dark btn-lg"} onClick={Text}>
+//           Submit
+//         </button>
+//       </form>
+//     </Modal>
+//   );
+// };
+
+// export default TextModal;
