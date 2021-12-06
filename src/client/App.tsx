@@ -5,12 +5,12 @@ import React, {
   useRef,
   useState,
 } from "react";
-import Modal from "react-modal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import Clue from "./Components/Clue";
 import Task from "./Components/Task";
 import Services from "../server/Services";
+import LoginModal from "./Components/loginModal";
+import SideInstructions from "./Components/SideInstructions";
+import TodoList from "./Components/TodoList";
+// import TextModal from "./Components/TextModal";
 
 function App() {
   const prevBtn = useRef<HTMLButtonElement>(null);
@@ -21,27 +21,41 @@ function App() {
   const paper2 = useRef<HTMLDivElement>(null);
   const paper3 = useRef<HTMLDivElement>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  // const [TextisLoggedIn, setTextIsLoggedIn] = useState<boolean>(false);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  // const [modalTextIsOpen, setTextIsOpen] = useState<boolean>(false);
   const [list, setList] = useState<string[]>([]);
   const [currentToDoListInput, setCurrentToDoListInput] = useState<string>("");
   const [currentState, setCurrentState] = useState<number>(1);
+  const [activeList, setActiveList] = useState<string>("");
+  const [savedLists, setSavedLists] = useState<string[]>([]);
+  const [solution, setSolution] = useState<string[]>([]);
   const [counter, SetCounter] = useState<number>(0);
-  const [clues, SetClues] = useState<string[]>([]);
-  const [suspects, SetSuspects] = useState<string[]>([]);
-  const [weapons, SetWeapons] = useState<string[]>([]);
-  const [locations, SetLocations] = useState<string[]>([]);
   const [blanks, setBlanks] = useState<string[]>([
     "_____",
     "_____",
     "_____",
     "_____",
     "_____",
+    "_____",
+    "_____",
+    "_____",
+    "_____"
   ]);
+
+  const handleModalOpen = (val) => setIsOpen(val);
+  // const handleTextModalOpen = (val) => setTextIsOpen(val);
+
+  const handleLogin = (val) => setIsLoggedIn(val);
+  // const handleTextLogin = (val) => setTextIsLoggedIn(val);
 
   let blankArray = blanks.map((val) => {
     return val;
   });
-  let mystery = `Our myster is awesome because ${blankArray[1]}`;
+  let mystery = `A dark night loomed during the amateur lacrosse tournament at which ${blankArray[0]} was playing, deep within ${blankArray[1]}. 
+  It was known that a certain artifact created by master artisan ${blankArray[2]}, ${blankArray[3]} would be on display in the ${blankArray[4]}.
+  Bad omens prevailed on that night, however. ${blankArray[5]}, their heart full of jealousy, whipping out ${blankArray[6]}, slew the good patron ${blankArray[7]} 
+  in an act of ice-cold blood! I discerned that ${blankArray[5]} was the criminal at hand by finding their hair on ${blankArray[8]}`;
 
   // Typescript errors on task_content and val.id
   const TaskList = list.map((val) => {
@@ -53,25 +67,14 @@ function App() {
       ></Task>
     );
   });
-  // // this is set using clues[index] because there are multiple types of clue each with a different property that corresponds to its text.
-  // const ClueList = clues.map((val, index) => {
-  //     return <Clue text={clues[index]}></Clue>
-  // });
 
-  const SuspectList = suspects.map((val, index) => {
-    return <Clue text={suspects[index]}></Clue>;
-  });
-  const WeaponList = weapons.map((val, index) => {
-    return <Clue text={weapons[index]}></Clue>;
-  });
-  const LocationList = locations.map((val, index) => {
-    return <Clue text={locations[index]}></Clue>;
-  });
+  const storedLists = savedLists.map((val) => {
+    return <TodoList text={val.list_name} setActiveList={setActiveList} setCounter={SetCounter} counter={counter}></TodoList>
+  })
 
   useEffect(() => {
-    //logic for checking if user is logged in
     let mounted = true;
-    Services.getTasks().then((tasks) => {
+    Services.getTasks(activeList).then((tasks) => {
       if (mounted) {
         setList(tasks);
       }
@@ -82,6 +85,22 @@ function App() {
   useEffect(() => {
     setBlanks([...blanks]);
   }, [counter]);
+
+  // May need to add a different counter here to prevent for calling on each render
+  useEffect(() => {
+    let mounted = true;
+    Services.getLists().then(res =>{
+      if (mounted){
+        setSavedLists(res)
+      }
+      return () => (mounted = false);
+    })
+  }, [counter])
+
+  useEffect(() => {
+    let mysterySolution = getMysterySolution()
+    mysterySolution.then(res => setSolution(res));
+  }, [])
 
   // Business Logic
   let numOfPapers = 3;
@@ -95,7 +114,7 @@ function App() {
     closeModal();
   }
 
-  function openModal() {
+  function openLoginModal() {
     setIsOpen(true);
   }
 
@@ -103,14 +122,11 @@ function App() {
     setIsOpen(false);
   }
 
-  // function refreshPage() {
-  //   window.location.reload();
-  // }
-
   function saveToDoListInput() {
     setList([...list, currentToDoListInput]);
     let data = {
-      content: `${currentToDoListInput}`,
+      content: currentToDoListInput,
+      list_name: activeList
     };
     fetch("/tasks", {
       method: "POST",
@@ -121,6 +137,13 @@ function App() {
     });
     setCurrentToDoListInput("");
     SetCounter(counter + 1);
+  }
+
+  const getMysterySolution = async () => {
+    let result = await Services.getIntialClues();
+    let finalResult = await Promise.all(result);
+    console.log(finalResult);
+    return finalResult
   }
 
   function openBook() {
@@ -192,22 +215,48 @@ function App() {
   // The clues need to be changed to go into database so that they will persist across server refreshes. Not a top-priority.
   async function toDoListItemClicked(id: number) {
     Services.DeleteTask(id);
-    let clue = await Services.getClue();
-    if (clue[0] == "suspects") {
-      SetSuspects([...suspects, clue[1]]);
-      blanks.splice(1, 1, clue[1]);
+    let random = (Math.round(Math.random() * (solution.length - 1)));
+    if (random == 0){
+      blanks.splice(0, 1, Object(solution[0]));
     }
-    if (clue[0] == "weapons") {
-      SetWeapons([...weapons, clue[1]]);
-      blanks.splice(1, 1, clue[1]);
+    if (random == 1){
+      blanks.splice(1, 1, Object(solution[1]));
     }
-    if (clue[0] == "locations") {
-      SetLocations([...locations, clue[1]]);
-      blanks.splice(1, 1, clue[1]);
+    if (random == 2){
+      blanks.splice(2, 1, Object(solution[2]));
+    }
+    if (random == 3){
+      blanks.splice(3, 1, Object(solution[3]));
+    }
+    if (random == 4){
+      blanks.splice(4, 1, Object(solution[4]));
+    }
+    if (random == 5){
+      blanks.splice(5, 1, Object(solution[5]));
+      blanks.splice(8, 1, Object(solution[8]));
+    }
+    if (random == 6){
+      blanks.splice(6, 1, Object(solution[6]));
+    }
+    if (random == 7){
+      blanks.splice(7, 1, Object(solution[7]));
+    }
+    if (random == 8){
+      blanks.splice(9, 1, Object(solution[9]));
     }
     SetCounter(counter + 1);
     //SetClues([...clues, await Services.getClue()]);
   }
+
+  function handleCreateTodoList(){
+    let data = {
+      list_name: activeList,
+      user_id: 1
+    }
+    console.log(data);
+    Services.createTodoList(data)
+  }
+
 
   return (
     <>
@@ -228,11 +277,13 @@ function App() {
             <div id="p1" ref={paper1} className={"paper"}>
               <div className={"front"}>
                 <div id="f1" className={"m-2 p-1 front-content"}>
-                  <h1 className={"m-0 book-title"}>Who Task'd It?</h1>
-                  <img id={"Cluebanner"} src="clueban.jpg" />
+                  <h1 className={"m-0 book-title"} style={{fontWeight: "bolder"}}>Who Task'd It?</h1>
+                  <img id={"Cluebanner"} src="title.jpg" />
                   {!isLoggedIn && (
-                    <button
-                      onClick={openModal}
+
+                    <button id={"CursorChange"}
+                      onClick={openLoginModal}
+
                       className={"btn btn-dark btn-lg"}
                     >
                       Login
@@ -242,10 +293,43 @@ function App() {
               </div>
               <div className={"align-items-start back"}>
                 <div id="b1" className={"back-content"}>
-                  <div id={"Todo"}className="container">
-                  <div className={"content"}>
-                    <h2>Create a To-Do List:</h2>
+                  <div id={"Todo"} className="container">
+                    <div className={"content"} style={{fontWeight: "bolder"}} >
+                      <h1 style={{fontWeight: "bolder"}}>Saved To-Do lists:</h1>
+                      <ul>{storedLists}</ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="p2" ref={paper2} className={"paper"}>
+              <div className={"front"}>
+                <div id={"Suspect"} className="container">
+                  <div id="f2" className={"front-content"}></div>
+                  <h1 id={"f2"} style={{fontWeight: "bolder"}}>Solved Mysteries</h1>
+                  <p>{mystery}</p>
+                </div>
+              </div>
+              <div className={"back"}>
+                <div id="b2" className={"back-content"}>
+                  <div id={"Todo"} className="container">
+                    <div className="content">
+
+                    <h2 id={"TodoH2"} style={{fontWeight: "bolder"}}>Create a To-Do List:</h2>
                     <input
+                      type="text"
+                      placeholder="enter list title"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        setActiveList(e.target.value);
+                      }}
+                      value={activeList}
+                    ></input>
+                    <button type="submit" onClick={handleCreateTodoList}>
+                      Create List
+                    </button>
+                    <input
+                      className={"InputTodo"}
+                      id={"CursorChange"}
                       type="text"
                       placeholder="enter task"
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -253,50 +337,20 @@ function App() {
                       }}
                       value={currentToDoListInput}
                     ></input>
-                    <button type="submit" onClick={saveToDoListInput}>
+                    <button className={"BtnTodo"}
+                      id={"CursorChange"}
+                      type="submit"
+                      onClick={saveToDoListInput}
+                    >
                       add
                     </button>
 
-                    <h4>Click checkmark to finish a task and get a clue!</h4>
-                    <h4>{TaskList}</h4>
-                  </div>
-                </div>
-                </div>
-              </div>
-            </div>
 
-            <div id="p2" ref={paper2} className={"paper"}>
-              <div className={"front"}>
-                <div id={"Suspect"} className="container">
-                  <div id="f2" className={"front-content"}>
-                    <h1>Suspect List</h1>
-                    <ul>
-                      <ul>{SuspectList}</ul>
-                    </ul>
-                    <h1>Clues</h1>
-                    <div className={"row"}>
-                      <div className={"col"}>
-                        <h2>Weapons</h2>
-                        <ul>{WeaponList}</ul>
-                      </div>
-                      <div className={"col"}>
-                        <h2>Locations</h2>
-                        <ul>{LocationList}</ul>
-                        <button
-                          className={"btn btn-lg btn-dark"}
-                          style={{ position: "relative", right: "35px" }}
-                        >
-                          Solve
-                        </button>
-                      </div>
+                    <h4 id={"TodoH4"} style={{fontWeight: "bolder"}}>Click checkmark to finish a task and get a clue!</h4>
+
+                    <h4>{TaskList}</h4>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className={"back"}>
-                <div id="b2" className={"back-content"}>
-                  <h1>Saved To-Do lists:</h1>
-                  <p>{mystery}</p>
                 </div>
               </div>
             </div>
@@ -304,33 +358,57 @@ function App() {
               <div className={"front"}>
                 <div id="f3" className={"front-content"}>
                   <div className={"content"}>
-                    <h1>Your Solved Mysteries:</h1>
+                    <h1 style={{fontWeight: "bolder"}}>Clues</h1>
+                    <p>{mystery}</p>
                   </div>
                 </div>
               </div>
               <div className={"back"}>
                 <div id="b3" className={"back-content"}>
-                  <h1>Credits:</h1>
+                    <h1 style={{
+                      position: "relative",
+    top: 13, fontWeight: "bolder"}}>Credits:</h1>
 
-                  <a href={"https://github.com/david90937"}>
-                    <img src="github.png" />
-                  </a>
-                  <h2>DAVID - back end development</h2>
+                    <a id={"CursorChange"} href={"https://github.com/david90937"}>
+                    <img style={{
+                      position: "relative",
+                      top: 48, left: -145
+                    }} src="github.png" />
+                    </a>
+                    <h2 style={{
+                      position: "relative",
+    top: 17, right: -20, fontWeight: "bolder"}}>DAVID - back end development</h2>
 
-                  <a href={"https://github.com/Zomievey"}>
-                    <img src="github.png" />
-                  </a>
-                  <h2>HAYLEE - front end development</h2>
-
-                  <a href={"https://github.com/dmcleg"}>
-                    <img src="github.png" />
-                  </a>
-                  <h2>DREW - UX/UI development</h2>
-
-                  <a href={"https://github.com/ashtonfarmer"}>
-                    <img src="github.png" />
-                  </a>
-                  <h2>ASHTON - front end development</h2>
+                    <a id={"CursorChange"} href={"https://github.com/Zomievey"}>
+                    <img style={{
+                      position: "relative",
+                      top: 26,
+                      right: 158,
+                    }} src="github.png" />
+                    </a>
+                    <h2 style={{
+                      position:"relative",
+                      top: -5,
+                      right: -12, fontWeight: "bolder"}}>HAYLEE - front end development</h2>
+                    <a id={"CursorChange"} href={"https://github.com/ashtonfarmer"}>
+                    <img style={{position: "relative",
+    top: 10,
+    right: 170 }}src="github.png" />
+                    </a>
+                    <h2 style={{
+                     right: -6,
+                     position: "relative",
+                     top: -21, fontWeight: "bolder"}}>ASHTON - front end development</h2>
+                    <a id={"CursorChange"} href={"https://github.com/dmcleg"}>
+                    <img style={{position: "relative",
+    top: -7,
+    right: 110}}src="github.png" />
+                    </a>
+                    <h2 style={{
+                    right: -36,
+                    position: "relative",
+                    top: -38, fontWeight: "bolder"}}>DREW - UX/UI development</h2>
+                   <img id={"backbanner"} src="map.jfif" />
                 </div>
               </div>
             </div>
@@ -346,47 +424,13 @@ function App() {
             </button>
           )}
         </div>
-        <div className={"sidebar"}>
-          <h1>Instructions:</h1>
-          <p>1. Create a To-Do list!</p>
-          <p>2. Complete tasks to reveal clues!</p>
-          <p>3. Collect clues to solve the mystery!</p>
-          <p>4. Attempt to solve as you</p>
-          <p>complete your tasks!</p>
-          <img
-            src="glass.png"
-            style={{
-              height: 150,
-              position: "absolute",
-              right: "55px",
-              top: "500px",
-            }}
-          />
-        </div>
+        <SideInstructions />
       </div>
-      <Modal
-        className={"modalstyle"}
+      <LoginModal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        shouldCloseOnOverlayClick={true}
-        shouldCloseOnEsc={true}
-        contentLabel="Example Modal"
-      >
-        <form className={"formstyle"}>
-          <label htmlFor={"username"}>Username</label>
-          <input id={"username"} type={"text"} />
-          <div></div>
-          <label htmlFor={"password"}> Password</label>
-          <input id={"password"} type={"password"} />
-          <button
-            id={"btnform"}
-            className={"btn btn-dark btn-lg"}
-            onClick={login}
-          >
-            Submit
-          </button>
-        </form>
-      </Modal>
+        handleModalOpen={handleModalOpen}
+        handleLogin={handleLogin}
+      />
     </>
   );
 }
