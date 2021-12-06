@@ -43,7 +43,7 @@ function App() {
     closeModal();
   }
 
-  function openModal() {
+  function openLoginModal() {
     setIsOpen(true);
   }
 
@@ -159,7 +159,7 @@ function App() {
                   />
                   {!isLoggedIn && (
                     <button
-                      onClick={openModal}
+                      onClick={openLoginModal}
                       className={"btn btn-dark btn-lg"}
                     >
                       Login

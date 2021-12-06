@@ -24,14 +24,15 @@ $dark: #343a40;
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
 
-
+a {
+  cursor: url("../assets/magnifier-removebg-preview.png"), default;
+}
 body{
   font-weight: bolder;
   overflow-x: hidden;
 }
 
 * {
- 
   font-weight: bolder;
   margin: 0;
   padding: 0;
@@ -62,14 +63,17 @@ body{
   margin: 50px;
   cursor: pointer;
   transition: transform 0.5s;
+  cursor: url("../assets/Cursor\ 32x32\ transparent.png"), auto;
 }
 
 button:focus {
   outline: none;
+  cursor: url("../assets/Cursor\ 32x32\ transparent.png"), auto;
 }
 
 button:hover i {
   color: rgb(102, 102, 102);
+  cursor: url("../assets/Cursor\ 32x32\ transparent.png"), auto;
 }
 
 i {
@@ -158,6 +162,10 @@ i {
 
 #p3 {
   z-index: 1;
+
+}
+#p3 {
+  z-index: 1;
 }
 
 /* Customization */
@@ -196,11 +204,35 @@ i {
 }
 
 .sidebar {
-
   background-color: rgb(255, 255, 255, 0.8);
   background-image: url("../assets/cover2.png");
+  background-position: center;
   font-size: xx-large;
   width: 11em;
+  z-index: 1;
+}
+
+#Suspect {
+  top: -103px;
+  height: 510px;
+  position: relative;
+  align-items: center;
+}
+
+.modalloginstyle {
+  background-color: rgb(255, 255, 255, 0.8);
+  backface-visibility: hidden;
+  border-left: 3px antiquewhite;
+  background-image: url("../assets/paper.jpg");
+  padding: 1rem;
+  margin: 1rem;
+  bottom: 1rem;
+  height: 13rem;
+  position: absolute;
+  left: 6rem;
+  top: 13rem;
+  border-radius: 15px;
+  border: solid 3px grey;
 }
 
 #f2 {
@@ -208,17 +240,6 @@ i {
 left: 2.4em;
 position: relative;
 }
-
-// #second-page {
-//   margin: 2px;
-//   left: 123px;
-//   height: 13em;
-//   width: 15em;
-//   background-image: url("/public/man.jpg");
-//   border: black solid 5px;
-//   background-size: cover;
-//   position: relative;
-// }
 
 .modalstyle {
   background-color: rgb(255, 255, 255, 0.8);
@@ -246,8 +267,9 @@ position: relative;
 #btnform {
   display: flex;
   position: absolute;
-  left: 30px;
-  margin-top: 8px;
+  left: 26px;
+  margin-top: 7px;
+  cursor: url("../assets/Cursor\ 32x32\ transparent.png"), auto;
 }
 
 #Cluebanner {
@@ -256,24 +278,14 @@ position: relative;
   margin: 10px;
   border-radius: 15px;
   border: solid 3px grey;
- 
-  position: relative;
-  top: -0.5em;
+  image-rendering: pixelated;
 }
 
 #Todo {
-  top: 1rem;
-  height: 510rem;
+  top: 2rem;
+  height: 33rem;
   position: relative;
 }
-
-// #mag {
-//   height: 5em;
-//   position: absolute;
-//   right: 2em;
-//   top: 17em;
-//   image-rendering: -webkit-optimize-contrast;
-// }
 
 #InstructionStyle {
   margin-block-end: revert;
@@ -287,6 +299,33 @@ position: relative;
   right: -0.3em;
   position: relative;
 }
+
+#CursorChange {
+  cursor: url("../assets/Cursor\ 32x32\ transparent.png"), auto;
+}
+
+.InputTodo{
+    position: relative;
+    left: 6rem;
+}
+
+.BtnTodo{
+    position: relative;
+    left: 6rem;
+}
+
+#TodoH2{
+    position: relative;
+    left: 5rem;
+}
+
+#TodoH4{
+    position: relative;
+    top: 0.5rem;
+  left: 30px;
+  margin-top: 8px;
+}
+
 
 #list {
   font-size: 2em;
@@ -303,16 +342,11 @@ position: relative;
   background-color: black;
   background: beige;
   filter: invert(1);
-
   height: 1em;
   width: 100%;
-
   border: black;
   border: 1em;
   position: absolute;
-
-
-
 }
 
 #backbanner {
