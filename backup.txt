@@ -75,7 +75,7 @@ function App() {
         closeModal();
     }
 
-    function openModal() {
+    function openLoginModal() {
         setIsOpen(true);
     }
 
@@ -205,7 +205,7 @@ function App() {
                                     <h1 className={"book-title"}>Who Task'd It?</h1>
                                     <img className={"cover-img"} src={"../assets/cover.jpg"} alt={"dog"}/>
                                     {!isLoggedIn &&
-                                        <button onClick={openModal} className={"btn btn-dark btn-lg"}>Login</button>}
+                                        <button onClick={openLoginModal} className={"btn btn-dark btn-lg"}>Login</button>}
                                 </div>
                             </div>
                             <div className={"back"}>
