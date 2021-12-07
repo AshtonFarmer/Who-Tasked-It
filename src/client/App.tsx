@@ -10,6 +10,7 @@ import Services from "../server/Services";
 import LoginModal from "./Components/loginModal";
 import SideInstructions from "./Components/SideInstructions";
 import TodoList from "./Components/TodoList";
+import { AutomaticPrefetchPlugin, container } from "webpack";
 
 // import TextModal from "./Components/TextModal";
 
@@ -32,6 +33,7 @@ function App() {
   const [savedLists, setSavedLists] = useState<string[]>([]);
   const [solution, setSolution] = useState<string[]>([]);
   const [counter, SetCounter] = useState<number>(0);
+
   const [mystery, setMystery] = useState<string[]>([]);
   const [sentenceCount, setSentenceCount] = useState<number>(-1);
 
@@ -58,6 +60,10 @@ function App() {
   }, [sentenceCount])
 
 
+  let mystery1 = `It was breakfast as usual at Visionary Philosopher 'Crybaby' the Class Clown's fiftieth birthday on the top floor of the mysterious seltzer water factory. Gathering there, doctors the world over sought a panacea, an archaic tome that smelled of the single chance at life, stored at the Infernal phone booth and guarded by Your Worst Friend 'The Butcher' who loves cheese. Soon, the hand of fate would play its cards. Larry 'Big Thumb' the uncomfortable, an individual of malice and deceit, concealing A pristine revolver plated with the first leaves of spring, ended the life of Your Worst Friend The Butcher who loves cheese, a virtuous person like no other! This case was conclusive, based on the wallet belonging to Larry 'Big Thumb' the uncomfortable that I found alongside Your subway order, smeared in dog food.`;
+  let mystery2 = `The first breath of autumn blew over the Antiquated local burger joint that Evil Incarnate, 'Loverboy' the Jeopardy champion loved so much. Unbeknownst to mortal eyes, the invisible being Oluwatobi 'Sudden Death' Adejumo toiled in the Practical walk in pantry to create a legendary item, The family pocket watch blessed with expectations. The ways of man, however, are unknowable. Engaged with thoughts of jealousy and fury, Haylee 'Fresh' Watanabe took out The twisted spoon wrenched from the abyss by obsession, and swung it wildly, slaying Oluwatobi 'Sudden Death' Adejumo, one who had done no wrong! This was cut and dry. Haylee 'Fresh' Watanabe left all of the receipts when they purchased A Roman gladius coated in amethyst light.`;
+  let mystery3 = `Centuries ago, chaos reigned over Viscount 'Four Eyes' Petrov's obsessive PC gaming hobby, far up at the Enigmatic casino. Beneath layers of sediment, a lone golem, Takashi 'the Real Killer', patron of the arts upheld the sanctity of the shrine at the Hated remote work environment, built to protect My cheap airline tickets powered by whispered secrets. The tides of the times. People's dreams. These things cannot be stopped. Practitioner of the Dark Arts, Delilah the doctoral candidate, bent on revenge and agonized by their past, drew forth The baseball bat welded with temptation and struck with fury, taking the reaper's lot from Takashi 'the Real Killer', patron of the arts, stealing a precious soul from this world! I knew at the moment I saw the crime scene: Practitioner of the Dark Arts, Delilah the doctoral candidate left the murder weapon next to A nightmare scenario rife with criminal intent.`;
+
   // Typescript errors on task_content and val.id
   const TaskList = list.map((val) => {
     return (
@@ -70,8 +76,15 @@ function App() {
   });
 
   const storedLists = savedLists.map((val) => {
-    return <TodoList text={val.list_name} setActiveList={setActiveList} setCounter={SetCounter} counter={counter}></TodoList>
-  })
+    return (
+      <TodoList
+        text={val.list_name}
+        setActiveList={setActiveList}
+        setCounter={SetCounter}
+        counter={counter}
+      ></TodoList>
+    );
+  });
 
   useEffect(() => {
     let mounted = true;
@@ -86,18 +99,18 @@ function App() {
   // May need to add a different counter here to prevent for calling on each render
   useEffect(() => {
     let mounted = true;
-    Services.getLists().then(res =>{
-      if (mounted){
-        setSavedLists(res)
+    Services.getLists().then((res) => {
+      if (mounted) {
+        setSavedLists(res);
       }
       return () => (mounted = false);
-    })
-  }, [counter])
+    });
+  }, [counter]);
 
   useEffect(() => {
-    let mysterySolution = getMysterySolution()
-    mysterySolution.then(res => setSolution(res));
-  }, [])
+    let mysterySolution = getMysterySolution();
+    mysterySolution.then((res) => setSolution(res));
+  }, []);
 
   // Business Logic
   let numOfPapers = 3;
@@ -123,7 +136,7 @@ function App() {
     setList([...list, currentToDoListInput]);
     let data = {
       content: currentToDoListInput,
-      list_name: activeList
+      list_name: activeList,
     };
     fetch("/tasks", {
       method: "POST",
@@ -140,8 +153,8 @@ function App() {
     let result = await Services.getIntialClues();
     let finalResult = await Promise.all(result);
     console.log(finalResult);
-    return finalResult
-  }
+    return finalResult;
+  };
 
   function openBook() {
     book.current!.style.transform = "translateX(50%)";
@@ -212,15 +225,14 @@ function App() {
     SetCounter(counter + 1);
   }
 
-  function handleCreateTodoList(){
+  function handleCreateTodoList() {
     let data = {
       list_name: activeList,
-      user_id: 1
-    }
+      user_id: 1,
+    };
     console.log(data);
-    Services.createTodoList(data)
+    Services.createTodoList(data);
   }
-
 
   return (
     <>
@@ -241,13 +253,17 @@ function App() {
             <div id="p1" ref={paper1} className={"paper"}>
               <div className={"front"}>
                 <div id="f1" className={"m-2 p-1 front-content"}>
-                  <h1 className={"m-0 book-title"} style={{fontWeight: "bolder"}}>Who Task'd It?</h1>
+                  <h1
+                    className={"m-0 book-title"}
+                    style={{ fontWeight: "bolder" }}
+                  >
+                    Who Task'd It?
+                  </h1>
                   <img id={"Cluebanner"} src="title.jpg" />
                   {!isLoggedIn && (
-
-                    <button id={"CursorChange"}
+                    <button
+                      id={"CursorChange"}
                       onClick={openLoginModal}
-
                       className={"btn btn-dark btn-lg"}
                     >
                       Login
@@ -258,9 +274,11 @@ function App() {
               <div className={"align-items-start back"}>
                 <div id="b1" className={"back-content"}>
                   <div id={"Todo"} className="container">
-                    <div className={"content"} style={{fontWeight: "bolder"}} >
-                      <h1 style={{fontWeight: "bolder"}}>Saved To-Do lists:</h1>
-                      <ul>{storedLists}</ul>
+                    <div className={"content"} style={{ fontWeight: "bolder" }}>
+                      <h1 style={{ fontWeight: "bolder" }}>
+                        Saved To-Do lists:
+                      </h1>
+                      <ul id={"storedlists"}>{storedLists}</ul>
                     </div>
                   </div>
                 </div>
@@ -270,48 +288,76 @@ function App() {
               <div className={"front"}>
                 <div id={"Suspect"} className="container">
                   <div id="f2" className={"front-content"}></div>
-                  <h1 id={"f2"} style={{fontWeight: "bolder"}}>Solved Mysteries</h1>
-                  <p>{sentences}</p>
+                  <h1 id={"f2"} style={{ fontWeight: "bolder" }}>
+                    Solved Mysteries
+                  </h1>
+                  <div id={"DropMystery"} className={"container"}>
+                    <div className="dropdown">
+                      <button className="dropbtn">Mystery 1</button>
+                      <div className="dropdown-content">
+                        <p>{mystery1}</p>
+                      </div>
+                    </div>
+                    <div className="dropdown">
+                      <button className="dropbtn">Mystery 2</button>
+                      <div className="dropdown-content">
+                        <p>{mystery2}</p>
+                      </div>
+                    </div>
+                    <div className="dropdown">
+                      <button className="dropbtn">Mystery 3</button>
+                      <div className="dropdown-content">
+                        <p>{mystery3}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className={"back"}>
                 <div id="b2" className={"back-content"}>
                   <div id={"Todo"} className="container">
                     <div className="content">
+                      <h2 id={"TodoH2"} style={{ fontWeight: "bolder" }}>
+                        Create a To-Do List:
+                      </h2>
+                      <input
+                        style={{ position: "relative", left: 33 }}
+                        className={"InputTodo"}
+                        id={"CursorChange"}
+                        type="text"
+                        placeholder="Enter List Title"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          setActiveList(e.target.value);
+                        }}
+                        value={activeList}
+                      ></input>
+                      {/* <button type="submit" onClick={handleCreateTodoList}>
+                        Save
+                      </button> */}
+                      <input
+                        className={"InputTodo"}
+                        id={"CursorChange"}
+                        type="text"
+                        placeholder="enter task"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          setCurrentToDoListInput(e.target.value);
+                        }}
+                        value={currentToDoListInput}
+                      ></input>
+                      <button
+                        className={"BtnTodo"}
+                        id={"CursorChange"}
+                        type="submit"
+                        onClick={saveToDoListInput}
+                      >
+                        add
+                      </button>
 
-                    <h2 id={"TodoH2"} style={{fontWeight: "bolder"}}>Create a To-Do List:</h2>
-                    <input
-                      className={"InputTodo"}
-                      id={"CursorChange"}
-                      type="text"
-                      placeholder="enter list title"
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setActiveList(e.target.value);
-                      }}
-                      value={activeList}
-                    ></input>
-                    <input
-                      className={"InputTodo"}
-                      id={"CursorChange"}
-                      type="text"
-                      placeholder="enter task"
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setCurrentToDoListInput(e.target.value);
-                      }}
-                      value={currentToDoListInput}
-                    ></input>
-                    <button className={"BtnTodo"}
-                      id={"CursorChange"}
-                      type="submit"
-                      onClick={saveToDoListInput}
-                    >
-                      add
-                    </button>
+                      <h4 id={"TodoH4"} style={{ fontWeight: "bolder" }}>
+                        Click checkmark to finish a task and get a clue!
+                      </h4>
 
-
-                    <h4 id={"TodoH4"} style={{fontWeight: "bolder"}}>Click checkmark to finish a task and get a clue!</h4>
-
-                    <h4>{TaskList}</h4>
+                      <div id={"scroll"}>{TaskList}</div>
                     </div>
                   </div>
                 </div>
@@ -321,57 +367,109 @@ function App() {
               <div className={"front"}>
                 <div id="f3" className={"front-content"}>
                   <div className={"content"}>
-                    <h1 style={{fontWeight: "bolder"}}>Clues</h1>
-                    <p>{mystery}</p>
+                    <h1
+                      style={{
+                        top: -29,
+                        position: "relative",
+                        fontWeight: "bolder",
+                        right: -168,
+                      }}
+                    >
+                      Clues
+                    </h1>
+                    <p id={"Clue"}>{mystery}</p>
                   </div>
                 </div>
               </div>
               <div className={"back"}>
                 <div id="b3" className={"back-content"}>
-                    <h1 style={{
+                  <h1
+                    style={{
                       position: "relative",
-    top: 13, fontWeight: "bolder"}}>Credits:</h1>
+                      top: 13,
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    Credits:
+                  </h1>
 
-                    <a id={"CursorChange"} href={"https://github.com/david90937"}>
-                    <img style={{
+                  <a id={"CursorChange"} href={"https://github.com/david90937"}>
+                    <img
+                      style={{
+                        position: "relative",
+                        top: 48,
+                        left: -145,
+                      }}
+                      src="github.png"
+                    />
+                  </a>
+                  <h2
+                    style={{
                       position: "relative",
-                      top: 48, left: -145
-                    }} src="github.png" />
-                    </a>
-                    <h2 style={{
-                      position: "relative",
-    top: 17, right: -20, fontWeight: "bolder"}}>DAVID - back end development</h2>
+                      top: 17,
+                      right: -20,
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    DAVID - back end development
+                  </h2>
 
-                    <a id={"CursorChange"} href={"https://github.com/Zomievey"}>
-                    <img style={{
+                  <a id={"CursorChange"} href={"https://github.com/Zomievey"}>
+                    <img
+                      style={{
+                        position: "relative",
+                        top: 26,
+                        right: 158,
+                      }}
+                      src="github.png"
+                    />
+                  </a>
+                  <h2
+                    style={{
                       position: "relative",
-                      top: 26,
-                      right: 158,
-                    }} src="github.png" />
-                    </a>
-                    <h2 style={{
-                      position:"relative",
                       top: -5,
-                      right: -12, fontWeight: "bolder"}}>HAYLEE - front end development</h2>
-                    <a id={"CursorChange"} href={"https://github.com/ashtonfarmer"}>
-                    <img style={{position: "relative",
-    top: 10,
-    right: 170 }}src="github.png" />
-                    </a>
-                    <h2 style={{
-                     right: -6,
-                     position: "relative",
-                     top: -21, fontWeight: "bolder"}}>ASHTON - front end development</h2>
-                    <a id={"CursorChange"} href={"https://github.com/dmcleg"}>
-                    <img style={{position: "relative",
-    top: -7,
-    right: 110}}src="github.png" />
-                    </a>
-                    <h2 style={{
-                    right: -36,
-                    position: "relative",
-                    top: -38, fontWeight: "bolder"}}>DREW - UX/UI development</h2>
-                   <img id={"backbanner"} src="map.jfif" />
+                      right: -12,
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    HAYLEE - front end development
+                  </h2>
+                  <a
+                    id={"CursorChange"}
+                    href={"https://github.com/ashtonfarmer"}
+                  >
+                    <img
+                      style={{ position: "relative", top: 10, right: 170 }}
+                      src="github.png"
+                    />
+                  </a>
+                  <h2
+                    style={{
+                      right: -6,
+                      position: "relative",
+                      top: -21,
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    ASHTON - front end development
+                  </h2>
+                  <a id={"CursorChange"} href={"https://github.com/dmcleg"}>
+                    <img
+                      style={{ position: "relative", top: -7, right: 110 }}
+                      src="github.png"
+                    />
+                  </a>
+                  <h2
+                    style={{
+                      right: -36,
+                      position: "relative",
+                      top: -38,
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    DREW - UX/UI development
+                  </h2>
+                  <img id={"backbanner"} src="map.jfif" />
                 </div>
               </div>
             </div>
