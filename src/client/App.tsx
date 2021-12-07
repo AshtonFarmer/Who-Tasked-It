@@ -31,31 +31,31 @@ function App() {
   const [savedLists, setSavedLists] = useState<string[]>([]);
   const [solution, setSolution] = useState<string[]>([]);
   const [counter, SetCounter] = useState<number>(0);
-  const [blanks, setBlanks] = useState<string[]>([
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-    "_____"
-  ]);
+  const [mystery, setMystery] = useState<string[]>([]);
+  const [sentenceCount, setSentenceCount] = useState<number>(-1);
 
   const handleModalOpen = (val) => setIsOpen(val);
   // const handleTextModalOpen = (val) => setTextIsOpen(val);
 
   const handleLogin = (val) => setIsLoggedIn(val);
   // const handleTextLogin = (val) => setTextIsLoggedIn(val);
+  let sentences = [`A dark night loomed during the amateur lacrosse tournament at which ${solution[0]} was playing, deep within ${solution[1]}.`, 
+  `It was known that a certain artifact created by master artisan ${solution[2]}, ${solution[3]} would be on display in the ${solution[4]}.`,
+  `Bad omens prevailed on that night, however. ${solution[5]}, their heart full of jealousy, whipping out ${solution[6]}, slew the good patron ${solution[7]} 
+  in an act of ice-cold blood!`, `I discerned that ${solution[5]} was the criminal at hand by finding their hair on ${solution[8]}`];
 
-  let blankArray = blanks.map((val) => {
-    return val;
-  });
-  let mystery = `A dark night loomed during the amateur lacrosse tournament at which ${blankArray[0]} was playing, deep within ${blankArray[1]}. 
-  It was known that a certain artifact created by master artisan ${blankArray[2]}, ${blankArray[3]} would be on display in the ${blankArray[4]}.
-  Bad omens prevailed on that night, however. ${blankArray[5]}, their heart full of jealousy, whipping out ${blankArray[6]}, slew the good patron ${blankArray[7]} 
-  in an act of ice-cold blood! I discerned that ${blankArray[5]} was the criminal at hand by finding their hair on ${blankArray[8]}`;
+  // let blankArray = blanks.map((val) => {
+  //   return val;
+  // });
+  useEffect(() => {
+    if (sentenceCount >= 0){
+      setMystery([...mystery, sentences[sentenceCount]]);
+    }
+    if (sentenceCount >= sentences.length){
+      return;
+    }
+  }, [sentenceCount])
+
 
   // Typescript errors on task_content and val.id
   const TaskList = list.map((val) => {
@@ -80,10 +80,6 @@ function App() {
       }
       return () => (mounted = false);
     });
-  }, [counter]);
-
-  useEffect(() => {
-    setBlanks([...blanks]);
   }, [counter]);
 
   // May need to add a different counter here to prevent for calling on each render
@@ -123,6 +119,7 @@ function App() {
   }
 
   function saveToDoListInput() {
+    handleCreateTodoList();
     setList([...list, currentToDoListInput]);
     let data = {
       content: currentToDoListInput,
@@ -182,9 +179,6 @@ function App() {
         default:
           throw new Error("unkown state");
       }
-      //     if (currentState === maxState) {
-      //         closeBook(true);
-      //   }
       setCurrentState(currentState + 1);
     }
   }
@@ -212,40 +206,10 @@ function App() {
     }
   }
 
-  // The clues need to be changed to go into database so that they will persist across server refreshes. Not a top-priority.
   async function toDoListItemClicked(id: number) {
     Services.DeleteTask(id);
-    let random = (Math.round(Math.random() * (solution.length - 1)));
-    if (random == 0){
-      blanks.splice(0, 1, Object(solution[0]));
-    }
-    if (random == 1){
-      blanks.splice(1, 1, Object(solution[1]));
-    }
-    if (random == 2){
-      blanks.splice(2, 1, Object(solution[2]));
-    }
-    if (random == 3){
-      blanks.splice(3, 1, Object(solution[3]));
-    }
-    if (random == 4){
-      blanks.splice(4, 1, Object(solution[4]));
-    }
-    if (random == 5){
-      blanks.splice(5, 1, Object(solution[5]));
-      blanks.splice(8, 1, Object(solution[8]));
-    }
-    if (random == 6){
-      blanks.splice(6, 1, Object(solution[6]));
-    }
-    if (random == 7){
-      blanks.splice(7, 1, Object(solution[7]));
-    }
-    if (random == 8){
-      blanks.splice(9, 1, Object(solution[9]));
-    }
+    setSentenceCount(sentenceCount +1);
     SetCounter(counter + 1);
-    //SetClues([...clues, await Services.getClue()]);
   }
 
   function handleCreateTodoList(){
@@ -307,7 +271,7 @@ function App() {
                 <div id={"Suspect"} className="container">
                   <div id="f2" className={"front-content"}></div>
                   <h1 id={"f2"} style={{fontWeight: "bolder"}}>Solved Mysteries</h1>
-                  <p>{mystery}</p>
+                  <p>{sentences}</p>
                 </div>
               </div>
               <div className={"back"}>
@@ -324,9 +288,6 @@ function App() {
                       }}
                       value={activeList}
                     ></input>
-                    <button type="submit" onClick={handleCreateTodoList}>
-                      Create List
-                    </button>
                     <input
                       className={"InputTodo"}
                       id={"CursorChange"}
