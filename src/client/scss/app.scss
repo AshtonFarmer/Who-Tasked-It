@@ -23,13 +23,11 @@ $dark: #343a40;
 
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
-
 a {
   cursor: url("/public/Cursor_32x32_transparent.png"), default;
 }
 
-
-body{
+body {
   font-weight: bolder;
   overflow-x: hidden;
 }
@@ -69,20 +67,17 @@ body{
   cursor: url("/public/Cursor_32x32_transparent.png"), auto;
 }
 
-
 button:focus {
   outline: none;
 
   cursor: url("/public/Cursor_32x32_transparent.png"), auto;
 }
 
-
 button:hover i {
   color: rgb(102, 102, 102);
 
   cursor: url("/public/Cursor_32x32_transparent.png"), auto;
 }
-
 
 i {
   color: gray;
@@ -170,7 +165,6 @@ i {
 
 #p3 {
   z-index: 1;
-
 }
 #p3 {
   z-index: 1;
@@ -221,9 +215,9 @@ i {
 }
 
 #f2 {
-   top: 1em;
-left: 2.4em;
-position: relative;
+  top: 1em;
+  left: 2.4em;
+  position: relative;
 }
 
 .modalloginstyle {
@@ -256,7 +250,6 @@ position: relative;
   left: 30px;
   margin-top: 8px;
   cursor: url("/public/Cursor_32x32_transparent.png"), auto;
-
 }
 
 #Cluebanner {
@@ -320,22 +313,22 @@ position: relative;
   position: relative;
 }
 
-.InputTodo{
+.InputTodo {
   position: relative;
   left: 6rem;
 }
 
-.BtnTodo{
+.BtnTodo {
   position: relative;
   left: 6rem;
 }
 
-#TodoH2{
+#TodoH2 {
   position: relative;
   left: 5rem;
 }
 
-#TodoH4{
+#TodoH4 {
   position: relative;
   top: 0.5rem;
 }
@@ -347,10 +340,26 @@ position: relative;
   top: -1em;
   width: 96%;
   font-weight: bolder;
-
 }
 
 #mtext {
   position: relative;
   top: 4em;
+}
+
+#scroll {
+  width: 368px;
+  height: 360px;
+  overflow: auto;
+  font-size: 1.5rem;
+  position: relative;
+  bottom: -18px;
+}
+
+#storedlists {
+  top: 29px;
+  position: relative;
+  left: -4px;
+  display: grid;
+  justify-items: flex-start;
 }
