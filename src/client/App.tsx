@@ -60,9 +60,9 @@ function App() {
   }, [sentenceCount])
 
 
-  let mystery1 = `It was breakfast as usual at Visionary Philosopher 'Crybaby' the Class Clown's fiftieth birthday on the top floor of the mysterious seltzer water factory. Gathering there, doctors the world over sought a panacea, an archaic tome that smelled of the single chance at life, stored at the Infernal phone booth and guarded by Your Worst Friend 'The Butcher' who loves cheese. Soon, the hand of fate would play its cards. Larry 'Big Thumb' the uncomfortable, an individual of malice and deceit, concealing A pristine revolver plated with the first leaves of spring, ended the life of Your Worst Friend The Butcher who loves cheese, a virtuous person like no other! This case was conclusive, based on the wallet belonging to Larry 'Big Thumb' the uncomfortable that I found alongside Your subway order, smeared in dog food.`;
-  let mystery2 = `The first breath of autumn blew over the Antiquated local burger joint that Evil Incarnate, 'Loverboy' the Jeopardy champion loved so much. Unbeknownst to mortal eyes, the invisible being Oluwatobi 'Sudden Death' Adejumo toiled in the Practical walk in pantry to create a legendary item, The family pocket watch blessed with expectations. The ways of man, however, are unknowable. Engaged with thoughts of jealousy and fury, Haylee 'Fresh' Watanabe took out The twisted spoon wrenched from the abyss by obsession, and swung it wildly, slaying Oluwatobi 'Sudden Death' Adejumo, one who had done no wrong! This was cut and dry. Haylee 'Fresh' Watanabe left all of the receipts when they purchased A Roman gladius coated in amethyst light.`;
-  let mystery3 = `Centuries ago, chaos reigned over Viscount 'Four Eyes' Petrov's obsessive PC gaming hobby, far up at the Enigmatic casino. Beneath layers of sediment, a lone golem, Takashi 'the Real Killer', patron of the arts upheld the sanctity of the shrine at the Hated remote work environment, built to protect My cheap airline tickets powered by whispered secrets. The tides of the times. People's dreams. These things cannot be stopped. Practitioner of the Dark Arts, Delilah the doctoral candidate, bent on revenge and agonized by their past, drew forth The baseball bat welded with temptation and struck with fury, taking the reaper's lot from Takashi 'the Real Killer', patron of the arts, stealing a precious soul from this world! I knew at the moment I saw the crime scene: Practitioner of the Dark Arts, Delilah the doctoral candidate left the murder weapon next to A nightmare scenario rife with criminal intent.`;
+  let mystery1 = `It was breakfast as usual at Visionary Philosopher 'Crybaby' the Class Clown's fiftieth birthday on the top floor of the mysterious seltzer water factory. Gathering there...`;
+  let mystery2 = `The first breath of autumn blew over the Antiquated local burger joint that Evil Incarnate, 'Loverboy' the Jeopardy champion loved so much. Unbeknownst to mortal eyes, the invisible... `;
+  let mystery3 = `Centuries ago, chaos reigned over Viscount 'Four Eyes' Petrov's obsessive PC gaming hobby, far up at the Enigmatic casino. Beneath layers of sediment, a lone golem, Takashi...`;
 
   // Typescript errors on task_content and val.id
   const TaskList = list.map((val) => {
@@ -292,19 +292,35 @@ function App() {
                     Solved Mysteries
                   </h1>
                   <div id={"DropMystery"} className={"container"}>
-                    <div className="dropdown">
+                    <div
+                      style={{
+                        position: "relative",
+                        bottom: -74,
+                      }}
+                      className="dropdown"
+                    >
                       <button className="dropbtn">Mystery 1</button>
                       <div className="dropdown-content">
                         <p>{mystery1}</p>
                       </div>
                     </div>
-                    <div className="dropdown">
+                    <div
+                      style={{ right: -12, position: "relative", bottom: -74 }}
+                      className="dropdown"
+                    >
                       <button className="dropbtn">Mystery 2</button>
                       <div className="dropdown-content">
                         <p>{mystery2}</p>
                       </div>
                     </div>
-                    <div className="dropdown">
+                    <div
+                      style={{
+                        right: -23,
+                        position: "relative",
+                        bottom: -74,
+                      }}
+                      className="dropdown"
+                    >
                       <button className="dropbtn">Mystery 3</button>
                       <div className="dropdown-content">
                         <p>{mystery3}</p>
