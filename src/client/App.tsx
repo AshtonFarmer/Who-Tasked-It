@@ -33,31 +33,32 @@ function App() {
   const [savedLists, setSavedLists] = useState<string[]>([]);
   const [solution, setSolution] = useState<string[]>([]);
   const [counter, SetCounter] = useState<number>(0);
-  const [blanks, setBlanks] = useState<string[]>([
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-    "_____",
-  ]);
+
+  const [mystery, setMystery] = useState<string[]>([]);
+  const [sentenceCount, setSentenceCount] = useState<number>(-1);
 
   const handleModalOpen = (val) => setIsOpen(val);
   // const handleTextModalOpen = (val) => setTextIsOpen(val);
 
   const handleLogin = (val) => setIsLoggedIn(val);
   // const handleTextLogin = (val) => setTextIsLoggedIn(val);
+  let sentences = [`A dark night loomed during the amateur lacrosse tournament at which ${solution[0]} was playing, deep within ${solution[1]}.`, 
+  `It was known that a certain artifact created by master artisan ${solution[2]}, ${solution[3]} would be on display in the ${solution[4]}.`,
+  `Bad omens prevailed on that night, however. ${solution[5]}, their heart full of jealousy, whipping out ${solution[6]}, slew the good patron ${solution[7]} 
+  in an act of ice-cold blood!`, `I discerned that ${solution[5]} was the criminal at hand by finding their hair on ${solution[8]}`];
 
-  let blankArray = blanks.map((val) => {
-    return val;
-  });
-  let mystery = `A dark night loomed during the amateur lacrosse tournament at which ${blankArray[0]} was playing, deep within ${blankArray[1]}. 
-  It was known that a certain artifact created by master artisan ${blankArray[2]}, ${blankArray[3]} would be on display in the ${blankArray[4]}.
-  Bad omens prevailed on that night, however. ${blankArray[5]}, their heart full of jealousy, whipping out ${blankArray[6]}, slew the good patron ${blankArray[7]} 
-  in an act of ice-cold blood! I discerned that ${blankArray[5]} was the criminal at hand by finding their hair on ${blankArray[8]}`;
+  // let blankArray = blanks.map((val) => {
+  //   return val;
+  // });
+  useEffect(() => {
+    if (sentenceCount >= 0){
+      setMystery([...mystery, sentences[sentenceCount]]);
+    }
+    if (sentenceCount >= sentences.length){
+      return;
+    }
+  }, [sentenceCount])
+
 
   let mystery1 = `It was breakfast as usual at Visionary Philosopher 'Crybaby' the Class Clown's fiftieth birthday on the top floor of the mysterious seltzer water factory. Gathering there, doctors the world over sought a panacea, an archaic tome that smelled of the single chance at life, stored at the Infernal phone booth and guarded by Your Worst Friend 'The Butcher' who loves cheese. Soon, the hand of fate would play its cards. Larry 'Big Thumb' the uncomfortable, an individual of malice and deceit, concealing A pristine revolver plated with the first leaves of spring, ended the life of Your Worst Friend The Butcher who loves cheese, a virtuous person like no other! This case was conclusive, based on the wallet belonging to Larry 'Big Thumb' the uncomfortable that I found alongside Your subway order, smeared in dog food.`;
   let mystery2 = `The first breath of autumn blew over the Antiquated local burger joint that Evil Incarnate, 'Loverboy' the Jeopardy champion loved so much. Unbeknownst to mortal eyes, the invisible being Oluwatobi 'Sudden Death' Adejumo toiled in the Practical walk in pantry to create a legendary item, The family pocket watch blessed with expectations. The ways of man, however, are unknowable. Engaged with thoughts of jealousy and fury, Haylee 'Fresh' Watanabe took out The twisted spoon wrenched from the abyss by obsession, and swung it wildly, slaying Oluwatobi 'Sudden Death' Adejumo, one who had done no wrong! This was cut and dry. Haylee 'Fresh' Watanabe left all of the receipts when they purchased A Roman gladius coated in amethyst light.`;
@@ -93,10 +94,6 @@ function App() {
       }
       return () => (mounted = false);
     });
-  }, [counter]);
-
-  useEffect(() => {
-    setBlanks([...blanks]);
   }, [counter]);
 
   // May need to add a different counter here to prevent for calling on each render
@@ -135,6 +132,7 @@ function App() {
     setIsOpen(false);
   }
   function saveToDoListInput() {
+    handleCreateTodoList();
     setList([...list, currentToDoListInput]);
     let data = {
       content: currentToDoListInput,
@@ -194,9 +192,6 @@ function App() {
         default:
           throw new Error("unkown state");
       }
-      //     if (currentState === maxState) {
-      //         closeBook(true);
-      //   }
       setCurrentState(currentState + 1);
     }
   }
@@ -224,40 +219,10 @@ function App() {
     }
   }
 
-  // The clues need to be changed to go into database so that they will persist across server refreshes. Not a top-priority.
   async function toDoListItemClicked(id: number) {
     Services.DeleteTask(id);
-    let random = Math.round(Math.random() * (solution.length - 1));
-    if (random == 0) {
-      blanks.splice(0, 1, Object(solution[0]));
-    }
-    if (random == 1) {
-      blanks.splice(1, 1, Object(solution[1]));
-    }
-    if (random == 2) {
-      blanks.splice(2, 1, Object(solution[2]));
-    }
-    if (random == 3) {
-      blanks.splice(3, 1, Object(solution[3]));
-    }
-    if (random == 4) {
-      blanks.splice(4, 1, Object(solution[4]));
-    }
-    if (random == 5) {
-      blanks.splice(5, 1, Object(solution[5]));
-      blanks.splice(8, 1, Object(solution[8]));
-    }
-    if (random == 6) {
-      blanks.splice(6, 1, Object(solution[6]));
-    }
-    if (random == 7) {
-      blanks.splice(7, 1, Object(solution[7]));
-    }
-    if (random == 8) {
-      blanks.splice(9, 1, Object(solution[9]));
-    }
+    setSentenceCount(sentenceCount +1);
     SetCounter(counter + 1);
-    //SetClues([...clues, await Services.getClue()]);
   }
 
   function handleCreateTodoList() {
