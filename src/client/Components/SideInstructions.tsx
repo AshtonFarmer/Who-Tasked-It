@@ -15,7 +15,7 @@ import React, {
           <div id={"Numero"}>
           <p>1. Create a To-Do List!</p>
           <p>2. Check off items on your to-do list to get Clues!</p>
-          <p>3. Once to-do list is completed save your Solved Mystery!</p>
+          <p>3. Once a to-do list is completed, save your Solved Mystery!</p>
           <p>4. Go to Saved lists to start a new Adventure!</p>
           <p>Have Fun!</p>
           </div>

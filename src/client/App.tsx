@@ -11,10 +11,12 @@ import LoginModal from "./Components/loginModal";
 import SideInstructions from "./Components/SideInstructions";
 import TodoList from "./Components/TodoList";
 import { AutomaticPrefetchPlugin, container } from "webpack";
-
-// import TextModal from "./Components/TextModal";
+import { Modal } from "react-bootstrap";
 
 function App() {
+  const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
+  const [modal2, setModal2] = useState(false);
   const prevBtn = useRef<HTMLButtonElement>(null);
   const nextBtn = useRef<HTMLButtonElement>(null);
   const book = useRef<HTMLDivElement>(null);
@@ -42,23 +44,22 @@ function App() {
 
   const handleLogin = (val) => setIsLoggedIn(val);
   // const handleTextLogin = (val) => setTextIsLoggedIn(val);
-  let sentences = [`A dark night loomed during the amateur lacrosse tournament at which ${solution[0]} was playing, deep within ${solution[1]}.`, 
-  `It was known that a certain artifact created by master artisan ${solution[2]}, ${solution[3]} would be on display in the ${solution[4]}.`,
-  `Bad omens prevailed on that night, however. ${solution[5]}, their heart full of jealousy, whipping out ${solution[6]}, slew the good patron ${solution[7]} 
-  in an act of ice-cold blood!`, `I discerned that ${solution[5]} was the criminal at hand by finding their hair on ${solution[8]}`];
+  let sentences = [
+    `A dark night loomed during the amateur lacrosse tournament at which ${solution[0]} was playing, deep within the ${solution[1]}.`,
+    `It was known that a certain artifact created by master artisan ${solution[2]}, ${solution[3]} would be on display in the ${solution[4]}.`,
+    `Bad omens prevailed on that night, however. ${solution[5]}, their heart full of jealousy, whipping out ${solution[6]}, slew the good patron ${solution[7]} 
+  in an act of ice-cold blood!`,
+    `I discerned that ${solution[5]} was the criminal at hand by finding their hair on ${solution[8]}.`,
+  ];
 
-  // let blankArray = blanks.map((val) => {
-  //   return val;
-  // });
   useEffect(() => {
-    if (sentenceCount >= 0){
+    if (sentenceCount >= 0 && sentenceCount < sentences.length) {
       setMystery([...mystery, sentences[sentenceCount]]);
     }
-    if (sentenceCount >= sentences.length){
+    if (sentenceCount >= sentences.length) {
       return;
     }
-  }, [sentenceCount])
-
+  }, [sentenceCount]);
 
   let mystery1 = `It was breakfast as usual at Visionary Philosopher 'Crybaby' the Class Clown's fiftieth birthday on the top floor of the mysterious seltzer water factory. Gathering there...`;
   let mystery2 = `The first breath of autumn blew over the Antiquated local burger joint that Evil Incarnate, 'Loverboy' the Jeopardy champion loved so much. Unbeknownst to mortal eyes, the invisible... `;
@@ -72,6 +73,46 @@ function App() {
         id={val.id}
         toDoListItemClicked={toDoListItemClicked}
       ></Task>
+    );
+  });
+
+  const autumnStory = () => {
+    if (modal1) {
+      setModal1(false);
+    } else {
+      setModal1(true);
+    }
+  };
+  const handleEdit = () => {
+    if (modal2) {
+      setModal2(false);
+    } else {
+      setModal2(true);
+    }
+  };
+  const thirdStory = () => {
+    if (modal) {
+      setModal(false);
+    } else {
+      setModal(true);
+    }
+  };
+
+  const closeStory1 = () => {
+    setModal1(false);
+  };
+  const closeStory2 = () => {
+    setModal2(false);
+  };
+  const closeStory = () => {
+    setModal(false);
+  };
+
+  const sentenceList = mystery.map((val) => {
+    return (
+      <p style={{ fontWeight: "bolder" }} className="Clue">
+        {val}
+      </p>
     );
   });
 
@@ -132,7 +173,6 @@ function App() {
     setIsOpen(false);
   }
   function saveToDoListInput() {
-    handleCreateTodoList();
     setList([...list, currentToDoListInput]);
     let data = {
       content: currentToDoListInput,
@@ -220,8 +260,9 @@ function App() {
   }
 
   async function toDoListItemClicked(id: number) {
+    console.log(id);
     Services.DeleteTask(id);
-    setSentenceCount(sentenceCount +1);
+    setSentenceCount(sentenceCount + 1);
     SetCounter(counter + 1);
   }
 
@@ -232,6 +273,7 @@ function App() {
     };
     console.log(data);
     Services.createTodoList(data);
+    SetCounter(counter + 1);
   }
 
   return (
@@ -278,6 +320,18 @@ function App() {
                       <h1 style={{ fontWeight: "bolder" }}>
                         Saved To-Do lists:
                       </h1>
+                      <input
+                        style={{ position: "relative", left: 0 }}
+                        className={"InputTodo"}
+                        id={"CursorChange"}
+                        type="text"
+                        placeholder="Enter List Title"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          setActiveList(e.target.value);
+                        }}
+                        value={activeList}
+                      ></input>
+                      <button onClick={handleCreateTodoList}>Title</button>
                       <ul id={"storedlists"}>{storedLists}</ul>
                     </div>
                   </div>
@@ -299,18 +353,111 @@ function App() {
                       }}
                       className="dropdown"
                     >
-                      <button className="dropbtn">Mystery 1</button>
+                      <button
+                        style={{
+                          borderRadius: 14,
+                          border: 1,
+                          backgroundColor: "grey",
+                        }}
+                        id={"CursorChange"}
+                        className="dropbtn"
+                      >
+                        Mystery 1
+                      </button>
                       <div className="dropdown-content">
                         <p>{mystery1}</p>
+                        <button
+                          style={{ position: "relative", right: -5 }}
+                          type="button"
+                          className="btn btn-outline-secondary btn-sm"
+                          data-bs-toggle="modal"
+                          onClick={handleEdit}
+                        >
+                          full story
+                        </button>
+
+                        <Modal show={modal2}>
+                          <Modal.Body>
+                            <p id={"ModalFont"}>
+                              "It was breakfast as usual at Visionary
+                              Philosopher 'Crybaby' the Class Clown's fiftieth
+                              birthday on the top floor of the mysterious
+                              seltzer water factory. Gathering there, doctors
+                              the world over sought a panacea, an archaic tome
+                              that smelled of the single chance at life, stored
+                              at the Infernal phone booth and guarded by Your
+                              Worst Friend 'The Butcher' who loves cheese. Soon,
+                              the hand of fate would play its cards. Larry 'Big
+                              Thumb' the uncomfortable, an individual of malice
+                              and deceit, concealing A pristine revolver plated
+                              with the first leaves of spring, ended the life of
+                              Your Worst Friend The Butcher who loves cheese, a
+                              virtuous person like no other! This case was
+                              conclusive, based on the wallet belonging to Larry
+                              'Big Thumb' the uncomfortable that I found
+                              alongside Your subway order, smeared in dog food."
+                            </p>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <button className="btn" onClick={closeStory2}>
+                              Close
+                            </button>
+                          </Modal.Footer>
+                        </Modal>
                       </div>
                     </div>
                     <div
                       style={{ right: -12, position: "relative", bottom: -74 }}
                       className="dropdown"
                     >
-                      <button className="dropbtn">Mystery 2</button>
+                      <button
+                        style={{
+                          borderRadius: 14,
+                          border: 1,
+                          backgroundColor: "grey",
+                        }}
+                        id={"CursorChange"}
+                        className="dropbtn"
+                      >
+                        Mystery 2
+                      </button>
                       <div className="dropdown-content">
                         <p>{mystery2}</p>
+                        <button
+                          style={{ position: "relative", right: -5 }}
+                          type="button"
+                          className="btn btn-outline-secondary btn-sm"
+                          onClick={autumnStory}
+                        >
+                          full story
+                        </button>
+                        <Modal show={modal1}>
+                          <Modal.Body>
+                            <p id={"ModalFont"}>
+                              "The first breath of autumn blew over the
+                              Antiquated local burger joint that Evil Incarnate,
+                              'Loverboy' the Jeopardy champion loved so much.
+                              Unbeknownst to mortal eyes, the invisible being
+                              Oluwatobi 'Sudden Death' Adejumo toiled in the
+                              Practical walk in pantry to create a legendary
+                              item, The family pocket watch blessed with
+                              expectations. The ways of man, however, are
+                              unknowable. Engaged with thoughts of jealousy and
+                              fury, Haylee 'Fresh' Watanabe took out The twisted
+                              spoon wrenched from the abyss by obsession, and
+                              swung it wildly, slaying Oluwatobi 'Sudden Death'
+                              Adejumo, one who had done no wrong! This was cut
+                              and dry. Haylee 'Fresh' Watanabe left all of the
+                              receipts when they purchased A Roman gladius
+                              coated in amethyst light."
+                            </p>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <button className="btn" onClick={closeStory1}>
+                              Close
+                            </button>
+                          </Modal.Footer>
+                        </Modal>
                       </div>
                     </div>
                     <div
@@ -321,9 +468,58 @@ function App() {
                       }}
                       className="dropdown"
                     >
-                      <button className="dropbtn">Mystery 3</button>
+                      <button
+                        style={{
+                          borderRadius: 14,
+                          border: 1,
+                          backgroundColor: "grey",
+                        }}
+                        id={"CursorChange"}
+                        className="dropbtn"
+                      >
+                        Mystery 3
+                      </button>
                       <div className="dropdown-content">
                         <p>{mystery3}</p>
+                        <button
+                          style={{ position: "relative", right: -5 }}
+                          type="button"
+                          className="btn btn-outline-secondary btn-sm"
+                          data-bs-toggle="modal"
+                          onClick={thirdStory}
+                        >
+                          full story
+                        </button>
+                        <Modal show={modal}>
+                          <Modal.Body>
+                            <p id={"ModalFont"}>
+                              "Centuries ago, chaos reigned over Viscount 'Four
+                              Eyes' Petrov's obsessive PC gaming hobby, far up
+                              at the Enigmatic casino. Beneath layers of
+                              sediment, a lone golem, Takashi 'the Real Killer',
+                              patron of the arts upheld the sanctity of the
+                              shrine at the Hated remote work environment, built
+                              to protect My cheap airline tickets powered by
+                              whispered secrets. The tides of the times.
+                              People's dreams. These things cannot be stopped.
+                              Practitioner of the Dark Arts, Delilah the
+                              doctoral candidate, bent on revenge and agonized
+                              by their past, drew forth The baseball bat welded
+                              with temptation and struck with fury, taking the
+                              reaper's lot from Takashi 'the Real Killer',
+                              patron of the arts, stealing a precious soul from
+                              this world! I knew at the moment I saw the crime
+                              scene: Practitioner of the Dark Arts, Delilah the
+                              doctoral candidate left the murder weapon next to
+                              A nightmare scenario rife with criminal intent."
+                            </p>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <button className="btn" onClick={closeStory}>
+                              Close
+                            </button>
+                          </Modal.Footer>
+                        </Modal>
                       </div>
                     </div>
                   </div>
@@ -336,17 +532,6 @@ function App() {
                       <h2 id={"TodoH2"} style={{ fontWeight: "bolder" }}>
                         Create a To-Do List:
                       </h2>
-                      <input
-                        style={{ position: "relative", left: 33 }}
-                        className={"InputTodo"}
-                        id={"CursorChange"}
-                        type="text"
-                        placeholder="Enter List Title"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          setActiveList(e.target.value);
-                        }}
-                        value={activeList}
-                      ></input>
                       {/* <button type="submit" onClick={handleCreateTodoList}>
                         Save
                       </button> */}
@@ -383,17 +568,17 @@ function App() {
               <div className={"front"}>
                 <div id="f3" className={"front-content"}>
                   <div className={"content"}>
-                    <h1
+                    {/* <h1
                       style={{
-                        top: -29,
+                        top: 2,
                         position: "relative",
                         fontWeight: "bolder",
                         right: -168,
                       }}
                     >
                       Clues
-                    </h1>
-                    <p id={"Clue"}>{mystery}</p>
+                    </h1> */}
+                    <div id={"Clue"}>{sentenceList}</div>
                   </div>
                 </div>
               </div>

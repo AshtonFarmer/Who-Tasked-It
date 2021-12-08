@@ -203,7 +203,6 @@ router.put('/tasks', (req, res) => {
 router.delete('/tasks', (req, res) => {
     try{
         const id = req.body.id;
-        console.log(req.body);
         db.db_queries.deleteTask(id);
         res.sendStatus(200);
     }

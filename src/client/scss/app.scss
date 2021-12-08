@@ -215,8 +215,8 @@ i {
 }
 
 #f2 {
-  top: 1em;
-  left: 2.4em;
+  top: 50px;
+  left: 81px;
   position: relative;
 }
 
@@ -258,7 +258,6 @@ i {
   margin: 10px;
   border-radius: 15px;
   border: solid 3px grey;
-  image-rendering: pixelated;
 }
 
 #Todo {
@@ -333,13 +332,28 @@ i {
   top: 0.5rem;
 }
 
-#Clue {
-  font-size: 23px;
-  right: -1em;
+.Clue {
+  height: 125px;
+  font-size: 17px;
+  right: -0.5em;
   position: relative;
-  top: -1em;
-  width: 96%;
-  font-weight: bolder;
+  top: 10px;
+  font-weight: bolder !important;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: 0.15em transparent; /* The typwriter cursor */
+  white-space: normal; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: 0.15em; /* Adjust as needed */
+  animation: typewriter 4s steps(44) 1s 1 normal both;
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 95%;
+  }
 }
 
 #mtext {
@@ -357,12 +371,14 @@ i {
 }
 
 #storedlists {
+  font-size: x-large;
   top: 29px;
   position: relative;
   left: -4px;
   display: grid;
   justify-items: flex-start;
 }
+
 .dropbtn {
   background-color: #4e372f;
   color: white;
@@ -381,10 +397,11 @@ i {
   display: none;
   position: absolute;
   background-color: tan;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 20%);
   z-index: 1;
-  height: 260px;
-  width: 365px;
+  height: 310px;
+  width: 201px;
+  font-size: x-large;
 }
 
 .dropdown-content a {
@@ -394,7 +411,9 @@ i {
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
@@ -404,8 +423,18 @@ i {
   background-color: #a17362;
 }
 
-#DropMystery{
+#DropMystery {
   left: 0rem;
   position: absolute;
   top: 4rem;
+  display: flex;
+}
+
+#ModalFont {
+  font-size: 23px;
+  font-weight: bolder;
+}
+
+.modal-content {
+  left: -7rem;
 }
