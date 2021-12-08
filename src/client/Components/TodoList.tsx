@@ -4,7 +4,7 @@ import React from "react";
 
 const TodoList = ({text, setActiveList, setCounter, counter}) => {
     return (
-        <p><FontAwesomeIcon icon={faShoePrints} style={{cursor: "pointer"}}
+        <p><FontAwesomeIcon icon={faShoePrints} id={"CursorChange"}
         onClick={() => {
             setActiveList(text)
             setCounter(counter +1)
